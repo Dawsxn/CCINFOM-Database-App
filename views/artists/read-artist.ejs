@@ -14,7 +14,7 @@
             <div class="col-3 d-flex flex-column justify-content-center align-items-center" id="DashboardCol">
                 <div class="container">
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Artists</button>
+                        <button type="button" class="btn btn-outline-dark">artist</button>
                     </div>
                     <div class="row">
                         <button type="button" class="btn btn-outline-dark">Albums</button>
@@ -44,16 +44,18 @@
                     <div class="row">
                         <div class="col d-flex justify-content-center">
                             <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
-                                <div class="card-header">USERNAME & ID</div>
+                                <div class="card-header"><%= artist.username %> <%= artist.id %></div>
                                 <div class="card-body">
-                                    <h5 class="card-title">FIRST NAME + LAST NAME</h5>
-                                    <p class="card-text">BIO, EMAIL, and CREATED AT</p>
+                                    <h5 class="card-title"><%= artist.first_name %> <%= artist.last_name %></h5>
+                                    <p class="card-text"><%= artist.bio %>, <%= artist.email %>, and <%= artist.created_at %></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Back</button>
+                        <form action="/artists" method="GET">
+                            <button type="submit" class="btn btn-outline-dark">Back</button>
+                        </form>
                     </div>
                 </div>
             </div>
