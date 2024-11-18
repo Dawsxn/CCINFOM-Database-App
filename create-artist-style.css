@@ -1,0 +1,9 @@
+body {
+    background-color: #F5F5F5;
+}
+
+#MainFrame {
+    width: 1250px;
+    height: 500px;
+    background-color: #eee;
+}
