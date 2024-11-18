@@ -59,7 +59,7 @@ app.get('/read-artist/:id', (req, res) => {
     const sql = "SELECT * FROM artists WHERE id = ?";
 
     con.query(sql, [id], (err, result) => {
-        res.render('read-artist', { artist: result[0]})
+        res.render('read-artist', { artists: result[0]})
     });
 })
 
@@ -70,7 +70,10 @@ app.get('/update-artist/:id', (req, res) => {
     const sql = "SELECT * FROM artists WHERE id = ?";
 
     con.query(sql, [id], (err, result) => {
-        res.render('update-artist', { artist: result[0]})
+        res.render('update-artist', { 
+            id: id,
+            artist: result[0]
+        })
     });
 })
 
