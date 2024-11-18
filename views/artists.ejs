@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="artists-style.css"> 
 </head>
 <body>
-    <h1 class="text-center mt-4">ChordCloud</h1>
     <div class="container" id="MainFrame">
         <div class="row" id="MainRow">
             <div class="col-3 d-flex flex-column justify-content-center align-items-center" id="DashboardCol">
                 <div class="container">
+                    <div class="row">
+                        <h1 class="text-center mt-4">ChordCloud</h1>
+                    </div>
                     <div class="row">
                         <button type="button" class="dashboardButton">Artists</button>
                     </div>
@@ -53,19 +55,31 @@
                                 </thead>
                                 <tbody>
                                     <% artists.forEach(artist => { %>
-                                        <tr class="table-row">
+                                        <tr class="table-row" id="TableRow">
                                             <td><%= artist.id %></td>
                                             <td id="usernameColumn"><%= artist.username %></td>
                                             <td>
                                                 <div class="button-container">
                                                     <form action="/artists/delete-artist/<%= artist.id %>" method="POST">
-                                                        <button type="submit" class="btn btn-light">D</button>
+                                                        <button type="submit" class="btn btn-light"> 
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="16" height="16">
+                                                                <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                                                            </svg>
+                                                        </button>
                                                     </form>
                                                     <form action="/artists/read-artist/<%= artist.id %>" method="GET">
-                                                        <button type="submit" class="btn btn-light">V</button>
+                                                        <button type="submit" class="btn btn-light">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                                                <path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" />
+                                                            </svg>
+                                                        </button>
                                                     </form>
                                                     <form action="/artists/update-artist/<%= artist.id %>" method="GET">
-                                                        <button type="submit" class="btn btn-light">U</button>
+                                                        <button type="submit" class="btn btn-light">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                                                <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                                                            </svg>
+                                                        </button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -77,7 +91,11 @@
                     </div>
                     <div class="row justify-content-center">
                         <form action="/artists/create-artist" method="GET" class="d-flex justify-content-center w-100">
-                            <button type="submit" class="btn btn-outline-dark mx-auto">Add New</button>
+                            <button type="submit" class="btn btn-light mx-auto" id="addBTN">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                    <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                                </svg>
+                            </button>
                         </form>
                     </div>
                 </div>
