@@ -58,13 +58,13 @@
                                             <td id="usernameColumn"><%= artist.username %></td>
                                             <td>
                                                 <div class="button-container">
-                                                    <form action="/delete-artist/<%= artist.id %>" method="POST">
+                                                    <form action="/artists/delete-artist/<%= artist.id %>" method="POST">
                                                         <button type="submit" class="btn btn-light">D</button>
                                                     </form>
-                                                    <form action="/read-artist/<%= artist.id %>" method="GET">
+                                                    <form action="/artists/read-artist/<%= artist.id %>" method="GET">
                                                         <button type="submit" class="btn btn-light">V</button>
                                                     </form>
-                                                    <form action="/update-artist/<%= artist.id %>" method="GET">
+                                                    <form action="/artists/update-artist/<%= artist.id %>" method="GET">
                                                         <button type="submit" class="btn btn-light">U</button>
                                                     </form>
                                                 </div>
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <form action="/create-artist" method="GET" class="d-flex justify-content-center w-100">
+                        <form action="/artists/create-artist" method="GET" class="d-flex justify-content-center w-100">
                             <button type="submit" class="btn btn-outline-dark mx-auto">Add New</button>
                         </form>
                     </div>

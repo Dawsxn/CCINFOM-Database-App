@@ -4,7 +4,7 @@ const artists = require('./routes/artists');
 
 const host = "localhost";
 const user = "root";
-const password = "mysqlpw";
+const password = "[{<kiewbI>}]";
 const database = "music_streaming";
 const port = 3000;
 
