@@ -56,13 +56,13 @@
                                         <td><%= artist.id %></td>
                                         <td><%= artist.username %></td>
                                         <td>
-                                            <form action="/delete-artist/<%= artist.id %>" method="POST">
+                                            <form action="/artists/delete-artist/<%= artist.id %>" method="POST">
                                                 <button type="submit" class="btn btn-light">D</button>
                                             </form>
-                                            <form action="/read-artist/<%= artist.id %>" method="GET">
+                                            <form action="/artists/read-artist/<%= artist.id %>" method="GET">
                                                 <button type="submit" class="btn btn-light">V</button>
                                             </form>
-                                            <form action="/update-artist/<%= artist.id %>" method="GET">
+                                            <form action="/artists/update-artist/<%= artist.id %>" method="GET">
                                                 <button type="submit" class="btn btn-light">U</button>
                                             </form>
                                         </td>
@@ -72,7 +72,7 @@
                         </table>
                     </div>
                     <div class="row">
-                        <form action="/create-artist" method="GET">
+                        <form action="/artists/create-artist" method="GET">
                             <button type="submit" class="btn btn-outline-dark">Add New</button>
                         </form>
                     </div>
