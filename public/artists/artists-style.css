@@ -1,11 +1,67 @@
-body {
-    background-color: #F5F5F5;
+html, body {
+    height: 100%; /* Ensure html and body take up the full viewport height */
+    margin: 0; /* Remove default margin */
 }
 
 #MainFrame {
     width: 1250px;
-    height: 750px;
-    background-color: #eee; 
-    border: 1px solid #ccc; 
+    height: 600px;
+    background-color: #eee;
+    border: 1px solid black;
+    border-radius: 15px; /* Rounded corners */
     padding: 20px;
+    display: flex; /* Use flexbox layout for the main frame */
+    flex-direction: column; /* Stack elements vertically */
+}
+
+#MainRow {
+    display: flex; /* Use flexbox layout for MainRow */
+    flex: 1; /* Allow MainRow to stretch and take up remaining space */
+}
+
+#DashboardCol {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column; /* Ensure buttons stack vertically */
+    justify-content: flex-start; /* Align buttons at the top */
+    height: 100%; 
+}
+
+.dashboardButton {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboardButton:hover {
+    background-color: #5B8AB9;
+}
+
+.dashboardButton:active {
+    background-color: #2a4d70;
+}
+
+.table-container {
+    max-height: 500px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table th, td {
+    text-align: center;
+}
+
+#usernameHeader {
+    text-align: left;
+}
+
+#usernameColumn {
+    text-align: left;
+}
+
+.button-container {
+    display: flex; /* Use flexbox for horizontal alignment */
+    gap: 10px; /* Optional: Add some space between the buttons */
+    justify-content: flex-start; /* Align buttons to the left (default) */
 }

@@ -3,7 +3,7 @@ var mysql = require('mysql2');
 
 const host = "localhost";
 const user = "root";
-const password = "[{<kiewbI>}]";
+const password = "mysqlpw";
 const database = "music_streaming";
 const port = 3000
 

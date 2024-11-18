@@ -10,70 +10,74 @@
 <body>
     <h1 class="text-center mt-4">ChordCloud</h1>
     <div class="container" id="MainFrame">
-        <div class="row">
+        <div class="row" id="MainRow">
             <div class="col-3 d-flex flex-column justify-content-center align-items-center" id="DashboardCol">
                 <div class="container">
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Artists</button>
+                        <button type="button" class="dashboardButton">Artists</button>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Albums</button>
+                        <button type="button" class="dashboardButton">Albums</button>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Tracks</button>
+                        <button type="button" class="dashboardButton">Tracks</button>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Users</button>
+                        <button type="button" class="dashboardButton">Users</button>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Follows</button>
+                        <button type="button" class="dashboardButton">Follows</button>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Likes</button>
+                        <button type="button" class="dashboardButton">Likes</button>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Streams</button>
+                        <button type="button" class="dashboardButton">Streams</button>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark">Reports</button>
+                        <button type="button" class="dashboardButton">Reports</button>
                     </div>
                 </div>
             </div>
             <div class="col-9 d-flex justify-content-center align-items-center">
                 <div class="container">
                     <div class="row">
-                        <table class="table table-dark table-striped mx-auto" style="width: 80%;">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Username</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% artists.forEach(artist => { %>
+                        <div class="table-container">
+                            <table class="table table-dark table-striped mx-auto" style="width: 80%;">
+                                <thead>
                                     <tr>
-                                        <td><%= artist.id %></td>
-                                        <td><%= artist.username %></td>
-                                        <td>
-                                            <form action="/delete-artist/<%= artist.id %>" method="POST">
-                                                <button type="submit" class="btn btn-light">D</button>
-                                            </form>
-                                            <form action="/read-artist/<%= artist.id %>" method="GET">
-                                                <button type="submit" class="btn btn-light">V</button>
-                                            </form>
-                                            <form action="/update-artist/<%= artist.id %>" method="GET">
-                                                <button type="submit" class="btn btn-light">U</button>
-                                            </form>
-                                        </td>
+                                        <th style="width: 10%;">ID</th>
+                                        <th id="usernameHeader" style="width: 70%;">Username</th>
+                                        <th style="width: 20%;">Actions</th>
                                     </tr>
-                                <% }); %>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <% artists.forEach(artist => { %>
+                                        <tr class="table-row">
+                                            <td><%= artist.id %></td>
+                                            <td id="usernameColumn"><%= artist.username %></td>
+                                            <td>
+                                                <div class="button-container">
+                                                    <form action="/delete-artist/<%= artist.id %>" method="POST">
+                                                        <button type="submit" class="btn btn-light">D</button>
+                                                    </form>
+                                                    <form action="/read-artist/<%= artist.id %>" method="GET">
+                                                        <button type="submit" class="btn btn-light">V</button>
+                                                    </form>
+                                                    <form action="/update-artist/<%= artist.id %>" method="GET">
+                                                        <button type="submit" class="btn btn-light">U</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="row">
-                        <form action="/create-artist" method="GET">
-                            <button type="submit" class="btn btn-outline-dark">Add New</button>
+                    <div class="row justify-content-center">
+                        <form action="/create-artist" method="GET" class="d-flex justify-content-center w-100">
+                            <button type="submit" class="btn btn-outline-dark mx-auto">Add New</button>
                         </form>
                     </div>
                 </div>
