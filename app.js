@@ -48,8 +48,6 @@ app.post('/create-artist', (req, res) => {
     const sql = "INSERT INTO artists (username, email, created_at, first_name, last_name, bio) VALUES (?, ?, ?, ?, ?, ?)";
 
     con.query(sql, [username, email, created_at, first_name, last_name, bio], (err, result) => {
-        if (err) throw err;
-
         res.redirect('/artists');
     });
 });
