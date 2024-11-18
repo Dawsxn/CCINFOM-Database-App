@@ -1,0 +1,12 @@
+body {
+    background-color: #F5F5F5;
+}
+
+#MainFrame {
+    width: 1250px;
+    height: 750px;
+    background-color: #eee; 
+    border: 1px solid #ccc; 
+    padding: 20px;
+}
+
