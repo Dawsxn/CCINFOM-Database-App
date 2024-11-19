@@ -15,13 +15,27 @@
                     <h1 class="text-light">ChordCloud</h1>
                 </div>
                 <div class="list-group">
-                    <button type="button" class="list-group-item list-group-item-action bg-dark text-light border-0">Artists</button>
-                    <button type="button" class="list-group-item list-group-item-action bg-dark text-light border-0">Albums</button>
-                    <button type="button" class="list-group-item list-group-item-action bg-dark text-light border-0">Tracks</button>
-                    <button type="button" class="list-group-item list-group-item-action bg-dark text-light border-0">Follows</button>
-                    <button type="button" class="list-group-item list-group-item-action bg-dark text-light border-0">Likes</button>
-                    <button type="button" class="list-group-item list-group-item-action bg-dark text-light border-0">Streams</button>
-                    <button type="button" class="list-group-item list-group-item-action bg-dark text-light border-0">Reports</button>
+                    <form action="/artists" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action bg-dark text-light border-0">Artists</button>
+                    </form>
+                    <form action="/albums" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action bg-dark text-light border-0">Albums</button>
+                    </form>
+                    <form action="/tracks" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action bg-dark text-light border-0">Tracks</button>
+                    </form>
+                    <form action="/follows" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action bg-dark text-light border-0">Follows</button>
+                    </form>
+                    <form action="/likes" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action bg-dark text-light border-0">Likes</button>
+                    </form>
+                    <form action="/streams" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action bg-dark text-light border-0">Streams</button>
+                    </form>
+                    <form action="/reports" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action bg-dark text-light border-0">Reports</button>
+                    </form>    
                 </div>
             </div>
 
