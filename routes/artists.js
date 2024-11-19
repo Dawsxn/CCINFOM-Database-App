@@ -17,19 +17,25 @@ router.get('/artists', (req, res) => {
     var sql = "SELECT id, username FROM artists ORDER BY id";
 
     con.query(sql, (err, result) => {
-        res.render('artists', { artists: result });
+        res.render('artists', {
+            artists: result
+        });
     });
 });
 
 // Create Artist
 router.get('/artists/create-artist', (req, res) => {
-    res.render('artists/create-read-update-artist', { id: "", artist: {
-        username: "",
-        picture: "",
-        first_name: "",
-        last_name: "",
-        bio: ""
-    }, readonly: false });
+    res.render('artists/create-read-update-artist', {
+        action: "create-artist",
+        artist: {
+            username: "",
+            picture: "",
+            first_name: "",
+            last_name: "",
+            bio: ""
+        },
+        readonly: false
+    });
 });
 
 router.post('/artists/create-artist', (req, res) => {
@@ -49,7 +55,11 @@ router.get('/artists/read-artist/:id', (req, res) => {
     const sql = "SELECT * FROM artists WHERE id = ?";
 
     con.query(sql, [id], (err, result) => {
-        res.render('artists/create-read-update-artist', { id: id, artist: result[0], readonly: true });
+        res.render('artists/create-read-update-artist', { 
+            action: "",
+            artist: result[0],
+            readonly: true
+        });
     });
 });
 
@@ -61,7 +71,7 @@ router.get('/artists/update-artist/:id', (req, res) => {
 
     con.query(sql, [id], (err, result) => {
         res.render('artists/create-read-update-artist', {
-            id: id,
+            action: `update-artist/${id}`,
             artist: result[0],
             readonly: false
         });
@@ -70,6 +80,7 @@ router.get('/artists/update-artist/:id', (req, res) => {
 
 router.post('/artists/update-artist/:id', (req, res) => {
     const id = req.params.id;
+    console.log(id);
     const { username, picture, first_name, last_name, bio } = req.body;
 
     const sql = "UPDATE artists SET username = ?, picture = ?, first_name = ?, last_name = ?, bio = ? WHERE id = ?";
