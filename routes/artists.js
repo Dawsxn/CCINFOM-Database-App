@@ -80,7 +80,7 @@ router.get('/artists/update-artist/:id', (req, res) => {
 
 router.post('/artists/update-artist/:id', (req, res) => {
     const id = req.params.id;
-    console.log(id);
+
     const { username, picture, first_name, last_name, bio } = req.body;
 
     const sql = "UPDATE artists SET username = ?, picture = ?, first_name = ?, last_name = ?, bio = ? WHERE id = ?";
