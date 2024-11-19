@@ -23,6 +23,10 @@ router.get('/follows', (req, res) => {
     });
 });
 
+router.get('/reports', (req, res) => {
+    res.render('reports');
+});
+
 // Follow Artist
 router.get('/follows/follow', (req, res) => {
     const sql = "SELECT * FROM artists ORDER BY id";
