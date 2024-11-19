@@ -1,12 +1,11 @@
 DROP DATABASE IF EXISTS music_streaming;
-CREATE DATABASE IF NOT EXISTS music_streaming;
+CREATE DATABASE music_streaming;
 USE music_streaming;
 
 CREATE TABLE `artists` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(255) UNIQUE NOT NULL,
-  `email` varchar(255) UNIQUE NOT NULL,
-  `created_at` date NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `picture` varchar(255),
   `first_name` varchar(255),
   `last_name` varchar(255),
   `bio` text
@@ -14,148 +13,117 @@ CREATE TABLE `artists` (
 
 CREATE TABLE `albums` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `title` varchar(255) UNIQUE NOT NULL,
-  `released_at` date NOT NULL,
-  `artist_id` integer NOT NULL
+  `title` varchar(255) NOT NULL,
+  `cover` varchar(255),
+  `artist_id` integer NOT NULL,
+  FOREIGN KEY (`artist_id`) REFERENCES `artists` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `tracks` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `title` varchar(255) UNIQUE NOT NULL,
-  `released_at` date NOT NULL,
-  `album_id` integer NOT NULL
-);
-
-CREATE TABLE `users` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(255) UNIQUE NOT NULL,
-  `email` varchar(255) UNIQUE NOT NULL,
-  `created_at` date NOT NULL,
-  `first_name` varchar(255),
-  `last_name` varchar(255)
+  `title` varchar(255) NOT NULL,
+  `audio` varchar(255),
+  `album_id` integer NOT NULL,
+  FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `follows` (
-  `following_user_id` integer,
-  `followed_artist_id` integer,
-  `followed_at` date NOT NULL,
-  PRIMARY KEY (`following_user_id`, `followed_artist_id`)
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `followed_at` timestamp NOT NULL,
+  `unfollowed_at` timestamp,
+  `following_artist_id` integer NOT NULL,
+  `followed_artist_id` integer NOT NULL,
+  FOREIGN KEY (`following_artist_id`) REFERENCES `artists` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`followed_artist_id`) REFERENCES `artists` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `likes` (
-  `liking_user_id` integer,
-  `liked_album_id` integer,
-  `liked_at` date NOT NULL,
-  PRIMARY KEY (`liking_user_id`, `liked_album_id`)
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `liked_at` timestamp NOT NULL,
+  `unliked_at` timestamp,
+  `liking_artist_id` integer NOT NULL,
+  `liked_album_id` integer NOT NULL,
+  FOREIGN KEY (`liking_artist_id`) REFERENCES `artists` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`liked_album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `streams` (
-  `streaming_user_id` integer,
-  `streamed_track_id` integer,
-  `streamed_at` date NOT NULL,
-  PRIMARY KEY (`streaming_user_id`, `streamed_track_id`)
+  `streaming_artist_id` integer NOT NULL,
+  `streamed_track_id` integer NOT NULL,
+  `streamed_at` timestamp,
+  PRIMARY KEY (`streaming_artist_id`, `streamed_track_id`, `streamed_at`),
+  FOREIGN KEY (`streaming_artist_id`) REFERENCES `artists` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`streamed_track_id`) REFERENCES `tracks` (`id`) ON DELETE CASCADE
 );
 
-CREATE INDEX `albums_index_0` ON `albums` (`artist_id`);
+INSERT INTO `artists` (`username`, `picture`, `first_name`, `last_name`, `bio`) VALUES
+('john_doe', 'https://example.com/images/john_doe.jpg', 'John', 'Doe', 'A contemporary artist known for his abstract paintings.'),
+('sarah_smith', 'https://example.com/images/sarah_smith.jpg', 'Sarah', 'Smith', 'A talented sculptor whose works explore the human form in modern materials.'),
+('alex_jones', 'https://example.com/images/alex_jones.jpg', 'Alex', 'Jones', 'A photographer who specializes in nature and wildlife photography.'),
+('emily_brown', 'https://example.com/images/emily_brown.jpg', 'Emily', 'Brown', 'A digital artist creating surreal and imaginative landscapes.'),
+('michael_williams', 'https://example.com/images/michael_williams.jpg', 'Michael', 'Williams', 'An award-winning painter known for his use of bold colors and textures.'),
+('olivia_miller', 'https://example.com/images/olivia_miller.jpg', 'Olivia', 'Miller', 'A street artist whose work incorporates graffiti and pop culture themes.'),
+('daniel_davis', 'https://example.com/images/daniel_davis.jpg', 'Daniel', 'Davis', 'A fine artist with a focus on portrait painting and classical techniques.'),
+('laura_garcia', 'https://example.com/images/laura_garcia.jpg', 'Laura', 'Garcia', 'A mixed-media artist exploring themes of identity and culture.'),
+('jackson_martinez', 'https://example.com/images/jackson_martinez.jpg', 'Jackson', 'Martinez', 'A conceptual artist who uses installations to comment on social issues.'),
+('isabella_hernandez', 'https://example.com/images/isabella_hernandez.jpg', 'Isabella', 'Hernandez', 'A visual artist specializing in digital illustrations and animation.');
 
-CREATE INDEX `tracks_index_1` ON `tracks` (`album_id`);
+INSERT INTO albums (title, cover, artist_id) VALUES
+('Album 1', 'https://example.com/covers/album1.jpg', 1),
+('Album 2', 'https://example.com/covers/album2.jpg', 2),
+('Album 3', 'https://example.com/covers/album3.jpg', 3),
+('Album 4', 'https://example.com/covers/album4.jpg', 4),
+('Album 5', 'https://example.com/covers/album5.jpg', 5),
+('Album 6', 'https://example.com/covers/album6.jpg', 6),
+('Album 7', 'https://example.com/covers/album7.jpg', 7),
+('Album 8', 'https://example.com/covers/album8.jpg', 8),
+('Album 9', 'https://example.com/covers/album9.jpg', 9),
+('Album 10', 'https://example.com/covers/album10.jpg', 10);
 
-ALTER TABLE `albums` ADD FOREIGN KEY (`artist_id`) REFERENCES `artists` (`id`) ON DELETE CASCADE;
+INSERT INTO tracks (title, audio, album_id) VALUES
+('Track 1', 'https://example.com/audio/track1.mp3', 1),
+('Track 2', 'https://example.com/audio/track2.mp3', 1),
+('Track 3', 'https://example.com/audio/track3.mp3', 2),
+('Track 4', 'https://example.com/audio/track4.mp3', 2),
+('Track 5', 'https://example.com/audio/track5.mp3', 3),
+('Track 6', 'https://example.com/audio/track6.mp3', 3),
+('Track 7', 'https://example.com/audio/track7.mp3', 4),
+('Track 8', 'https://example.com/audio/track8.mp3', 5),
+('Track 9', 'https://example.com/audio/track9.mp3', 6),
+('Track 10', 'https://example.com/audio/track10.mp3', 7);
 
-ALTER TABLE `tracks` ADD FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE;
+INSERT INTO follows (followed_at, unfollowed_at, following_artist_id, followed_artist_id) VALUES
+('2024-11-01 10:00:00', NULL, 1, 2),
+('2024-11-02 10:00:00', NULL, 2, 3),
+('2024-11-03 10:00:00', NULL, 3, 4),
+('2024-11-04 10:00:00', NULL, 4, 5),
+('2024-11-05 10:00:00', '2024-11-10 10:00:00', 5, 6),
+('2024-11-06 10:00:00', NULL, 6, 7),
+('2024-11-07 10:00:00', NULL, 7, 8),
+('2024-11-08 10:00:00', NULL, 8, 9),
+('2024-11-09 10:00:00', NULL, 9, 10),
+('2024-11-10 10:00:00', NULL, 10, 1);
 
-ALTER TABLE `follows` ADD FOREIGN KEY (`following_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+INSERT INTO likes (liked_at, unliked_at, liking_artist_id, liked_album_id) VALUES
+('2024-11-01 11:00:00', NULL, 1, 1),
+('2024-11-02 11:00:00', NULL, 2, 2),
+('2024-11-03 11:00:00', NULL, 3, 3),
+('2024-11-04 11:00:00', NULL, 4, 4),
+('2024-11-05 11:00:00', NULL, 5, 5),
+('2024-11-06 11:00:00', NULL, 6, 6),
+('2024-11-07 11:00:00', '2024-11-08 11:00:00', 7, 7),
+('2024-11-08 11:00:00', NULL, 8, 8),
+('2024-11-09 11:00:00', NULL, 9, 9),
+('2024-11-10 11:00:00', NULL, 10, 10);
 
-ALTER TABLE `follows` ADD FOREIGN KEY (`followed_artist_id`) REFERENCES `artists` (`id`) ON DELETE CASCADE;
-
-ALTER TABLE `likes` ADD FOREIGN KEY (`liking_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
-ALTER TABLE `likes` ADD FOREIGN KEY (`liked_album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE;
-
-ALTER TABLE `streams` ADD FOREIGN KEY (`streaming_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
-ALTER TABLE `streams` ADD FOREIGN KEY (`streamed_track_id`) REFERENCES `tracks` (`id`) ON DELETE CASCADE;
-
-INSERT INTO artists (username, email, created_at, first_name, last_name, bio) VALUES
-('taylorswift', 'tswift@example.com', '2006-10-24', 'Taylor', 'Swift', 'American singer-songwriter.'),
-('edsheeran', 'edsheeran@example.com', '2011-09-09', 'Ed', 'Sheeran', 'British singer-songwriter.'),
-('drake', 'drake@example.com', '2009-06-15', 'Aubrey', 'Graham', 'Canadian rapper and singer.'),
-('arianagrande', 'ariana@example.com', '2013-08-30', 'Ariana', 'Grande', 'American pop and R&B singer.'),
-('theweeknd', 'weeknd@example.com', '2015-03-20', 'Abel', 'Tesfaye', 'Canadian singer and songwriter.'),
-('billieeilish', 'billie@example.com', '2017-10-18', 'Billie', 'Eilish', 'American singer and songwriter.'),
-('justinbieber', 'justin@example.com', '2010-02-01', 'Justin', 'Bieber', 'Canadian pop singer.'),
-('bts_official', 'bts@example.com', '2013-06-13', 'BTS', 'Band', 'South Korean boy band.'),
-('oliviarodrigo', 'olivia@example.com', '2020-01-08', 'Olivia', 'Rodrigo', 'American pop singer.'),
-('postmalone', 'post@example.com', '2015-12-10', 'Austin', 'Post', 'American rapper and singer.');
-
-INSERT INTO albums (title, released_at, artist_id) VALUES
-('1989', '2014-10-27', 1),
-('Divide', '2017-03-03', 2),
-('Scorpion', '2018-06-29', 3),
-('Thank U, Next', '2019-02-08', 4),
-('After Hours', '2020-03-20', 5),
-('Happier Than Ever', '2021-07-30', 6),
-('Purpose', '2015-11-13', 7),
-('Map of the Soul: 7', '2020-02-21', 8),
-('SOUR', '2021-05-21', 9),
-('Hollywood\'s Bleeding', '2019-09-06', 10);
-
-INSERT INTO tracks (title, released_at, album_id) VALUES
-('Blank Space', '2014-10-27', 1),
-('Shape of You', '2017-01-06', 2),
-('God\'s Plan', '2018-01-19', 3),
-('7 rings', '2019-01-18', 4),
-('Blinding Lights', '2019-11-29', 5),
-('Bad Guy', '2019-03-29', 6),
-('Sorry', '2015-10-23', 7),
-('Dynamite', '2020-08-21', 8),
-('Drivers License', '2021-01-08', 9),
-('Circles', '2019-08-30', 10);
-
-INSERT INTO users (username, email, created_at, first_name, last_name) VALUES
-('alice_wong', 'alice@example.com', '2024-01-01', 'Alice', 'Wong'),
-('bob_johnson', 'bob@example.com', '2024-02-01', 'Bob', 'Johnson'),
-('charlie_lee', 'charlie@example.com', '2024-03-01', 'Charlie', 'Lee'),
-('dave_martin', 'dave@example.com', '2024-04-01', 'Dave', 'Martin'),
-('emma_clark', 'emma@example.com', '2024-05-01', 'Emma', 'Clark'),
-('frank_garcia', 'frank@example.com', '2024-06-01', 'Frank', 'Garcia'),
-('grace_hill', 'grace@example.com', '2024-07-01', 'Grace', 'Hill'),
-('henry_lopez', 'henry@example.com', '2024-08-01', 'Henry', 'Lopez'),
-('isabella_king', 'isabella@example.com', '2024-09-01', 'Isabella', 'King'),
-('jack_davis', 'jack@example.com', '2024-10-01', 'Jack', 'Davis');
-
-INSERT INTO streams (streaming_user_id, streamed_track_id, streamed_at) VALUES
-(1, 1, '2024-08-10'),
-(2, 2, '2024-08-11'),
-(3, 3, '2024-08-12'),
-(4, 4, '2024-08-13'),
-(5, 5, '2024-08-14'),
-(6, 6, '2024-08-15'),
-(7, 7, '2024-08-16'),
-(8, 8, '2024-08-17'),
-(9, 9, '2024-08-18'),
-(10, 10, '2024-08-19');
-
-INSERT INTO likes (liking_user_id, liked_album_id, liked_at) VALUES
-(1, 1, '2024-08-10'),
-(2, 2, '2024-08-11'),
-(3, 3, '2024-08-12'),
-(4, 4, '2024-08-13'),
-(5, 5, '2024-08-14'),
-(6, 6, '2024-08-15'),
-(7, 7, '2024-08-16'),
-(8, 8, '2024-08-17'),
-(9, 9, '2024-08-18'),
-(10, 10, '2024-08-19');
-
-INSERT INTO follows (following_user_id, followed_artist_id, followed_at) VALUES
-(1, 1, '2024-08-10'),
-(2, 2, '2024-08-11'),
-(3, 3, '2024-08-12'),
-(4, 4, '2024-08-13'),
-(5, 5, '2024-08-14'),
-(6, 6, '2024-08-15'),
-(7, 7, '2024-08-16'),
-(8, 8, '2024-08-17'),
-(9, 9, '2024-08-18'),
-(10, 10, '2024-08-19');
+INSERT INTO streams (streaming_artist_id, streamed_track_id, streamed_at) VALUES
+(1, 1, '2024-11-01 12:00:00'),
+(1, 2, '2024-11-01 12:05:00'),
+(2, 3, '2024-11-02 13:00:00'),
+(3, 4, '2024-11-03 14:00:00'),
+(4, 5, '2024-11-04 15:00:00'),
+(5, 6, '2024-11-05 16:00:00'),
+(6, 7, '2024-11-06 17:00:00'),
+(7, 8, '2024-11-07 18:00:00'),
+(8, 9, '2024-11-08 19:00:00'),
+(9, 10, '2024-11-09 20:00:00');

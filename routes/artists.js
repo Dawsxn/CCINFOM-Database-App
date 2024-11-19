@@ -10,9 +10,7 @@ const con = mysql.createConnection({
     database: "music_streaming"
 });
 
-con.connect(err => {
-    if (err) throw err;
-});
+con.connect();
 
 // Artists
 router.get('/artists', (req, res) => {
@@ -25,15 +23,21 @@ router.get('/artists', (req, res) => {
 
 // Create Artist
 router.get('/artists/create-artist', (req, res) => {
-    res.render('artists/create-artist');
+    res.render('artists/create-read-update-artist', { id: "", artist: {
+        username: "",
+        picture: "",
+        first_name: "",
+        last_name: "",
+        bio: ""
+    }, readonly: false });
 });
 
 router.post('/artists/create-artist', (req, res) => {
-    const { username, email, created_at, first_name, last_name, bio } = req.body;
+    const { username, picture, first_name, last_name, bio } = req.body;
 
-    const sql = "INSERT INTO artists (username, email, created_at, first_name, last_name, bio) VALUES (?, ?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO artists (username, picture, first_name, last_name, bio) VALUES (?, ?, ?, ?, ?)";
 
-    con.query(sql, [username, email, created_at, first_name, last_name, bio], (err, result) => {
+    con.query(sql, [username, picture, first_name, last_name, bio], (err, result) => {
         res.redirect('/artists');
     });
 });
@@ -45,7 +49,7 @@ router.get('/artists/read-artist/:id', (req, res) => {
     const sql = "SELECT * FROM artists WHERE id = ?";
 
     con.query(sql, [id], (err, result) => {
-        res.render('artists/read-artist', { id: id, artist: result[0] });
+        res.render('artists/create-read-update-artist', { id: id, artist: result[0], readonly: true });
     });
 });
 
@@ -56,20 +60,21 @@ router.get('/artists/update-artist/:id', (req, res) => {
     const sql = "SELECT * FROM artists WHERE id = ?";
 
     con.query(sql, [id], (err, result) => {
-        res.render('artists/update-artist', {
+        res.render('artists/create-read-update-artist', {
             id: id,
-            artist: result[0]
+            artist: result[0],
+            readonly: false
         });
     });
 });
 
 router.post('/artists/update-artist/:id', (req, res) => {
     const id = req.params.id;
-    const { username, email, created_at, first_name, last_name, bio } = req.body;
+    const { username, picture, first_name, last_name, bio } = req.body;
 
-    const sql = "UPDATE artists SET username = ?, email = ?, created_at = ?, first_name = ?, last_name = ?, bio = ? WHERE id = ?";
+    const sql = "UPDATE artists SET username = ?, picture = ?, first_name = ?, last_name = ?, bio = ? WHERE id = ?";
 
-    con.query(sql, [username, email, created_at, first_name, last_name, bio, id], (err, result) => {
+    con.query(sql, [username, picture, first_name, last_name, bio, id], (err, result) => {
         res.redirect('/artists');
     });
 });

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="update-artist-style.css"> 
+</head>
+<body>
+    <h1 class="text-center mt-4">ChordCloud</h1>
+    <div class="container" id="MainFrame">
+        <form action="/artists/update-artist/<%= id %>" method="POST">
+            <div class="row">
+                <label for="username" class="createArtistLabel">Username</label>
+                <input type="text" id="username" name="username" class="form-control" value="<%= artist.username %>" <%= readonly ? 'disabled' : '' %>>
+            </div>
+            <div class="row">
+                <label for="picture" class="createArtistLabel">Picture</label>
+                <input type=picture" id="picture" name="picture" class="form-control" value="<%= artist.picture %>" <%= readonly ? 'disabled' : '' %>>
+            </div>
+            <div class="row">
+                <label for="first_name" class="createArtistLabel">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" value="<%= artist.first_name %>" <%= readonly ? 'disabled' : '' %>>
+            </div>
+            <div class="row">
+                <label for="last_name" class="createArtistLabel">Last Name</label>
+                <input type="text" id="last_name" name="last_name" class="form-control" value="<%= artist.last_name %>" <%= readonly ? 'disabled' : '' %>>
+            </div>
+            <div class="row">
+                <label for="bio" class="createArtistLabel">Bio</label>
+                <input type="text" id="bio" name="bio" class="form-control" value="<%= artist.bio %>" <%= readonly ? 'disabled' : '' %>>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-outline-dark" <%= readonly ? 'disabled' : '' %>>Submit</button>
+            </div>
+        </form>
+        <form action="/artists" method="GET">
+            <button type="submit" class="btn btn-outline-dark">Back</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+</body>
+</html>
