@@ -12,6 +12,16 @@ const con = mysql.createConnection({
 
 con.connect();
 
+router.get('/follows', (req, res) => {
+    var sql = "SELECT id, following_artist_id, followed_artist_id, followed_at FROM follows WHERE unfollowed_at IS NULL";
+
+    con.query(sql, (err, result) => {
+        res.render('follows', {
+            follows: result
+        });
+    });
+});
+
 // Artists
 router.get('/artists', (req, res) => {
     var sql = "SELECT id, username FROM artists ORDER BY id";

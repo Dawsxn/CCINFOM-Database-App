@@ -18,35 +18,35 @@
             <!-- Username -->
             <div class="mb-4">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" name="username" class="form-control bg-secondary text-white" value="<%= artist.username %>" <%= readonly ? 'disabled' : '' %> required>
+                <input type="text" id="username" name="username" class="form-control bg-secondary text-white" value="<%= artist.username %>" <%= readonly ? 'disabled' : '' %> maxlength="255" required>
                 <div class="invalid-feedback">Please provide a valid username.</div>
             </div>
 
             <!-- Picture URL -->
             <div class="mb-4">
                 <label for="picture" class="form-label">Picture URL</label>
-                <input type="url" id="picture" name="picture" class="form-control bg-secondary text-white" value="<%= artist.picture %>" <%= readonly ? 'disabled' : '' %> required>
+                <input type="url" id="picture" name="picture" class="form-control bg-secondary text-white" value="<%= artist.picture %>" <%= readonly ? 'disabled' : '' %> maxlength="255" required>
                 <div class="invalid-feedback">Please provide a valid picture URL.</div>
             </div>
 
             <!-- First Name -->
             <div class="mb-4">
                 <label for="first_name" class="form-label">First Name</label>
-                <input type="text" id="first_name" name="first_name" class="form-control bg-secondary text-white" value="<%= artist.first_name %>" <%= readonly ? 'disabled' : '' %> required>
+                <input type="text" id="first_name" name="first_name" class="form-control bg-secondary text-white" value="<%= artist.first_name %>" <%= readonly ? 'disabled' : '' %> maxlength="255" required>
                 <div class="invalid-feedback">First name is required.</div>
             </div>
 
             <!-- Last Name -->
             <div class="mb-4">
                 <label for="last_name" class="form-label">Last Name</label>
-                <input type="text" id="last_name" name="last_name" class="form-control bg-secondary text-white" value="<%= artist.last_name %>" <%= readonly ? 'disabled' : '' %> required>
+                <input type="text" id="last_name" name="last_name" class="form-control bg-secondary text-white" value="<%= artist.last_name %>" <%= readonly ? 'disabled' : '' %> maxlength="255" required>
                 <div class="invalid-feedback">Last name is required.</div>
             </div>
 
             <!-- Bio -->
             <div class="mb-4">
                 <label for="bio" class="form-label">Bio</label>
-                <textarea id="bio" name="bio" rows="4" class="form-control bg-secondary text-white" <%= readonly ? 'disabled' : '' %> required><%= artist.bio %></textarea>
+                <textarea id="bio" name="bio" rows="4" class="form-control bg-secondary text-white" <%= readonly ? 'disabled' : '' %> maxlength="255" required><%= artist.bio %></textarea>
                 <div class="invalid-feedback">Please provide a bio.</div>
             </div>
 
