@@ -12,8 +12,9 @@ const con = mysql.createConnection({
 
 con.connect();
 
+// Follows
 router.get('/follows', (req, res) => {
-    var sql = "SELECT id, following_artist_id, followed_artist_id, followed_at FROM follows WHERE unfollowed_at IS NULL";
+    const sql = "SELECT id, following_artist_id, followed_artist_id, followed_at FROM follows WHERE unfollowed_at IS NULL";
 
     con.query(sql, (err, result) => {
         res.render('follows', {
@@ -22,9 +23,42 @@ router.get('/follows', (req, res) => {
     });
 });
 
+// Follow Artist
+router.get('/follows/follow', (req, res) => {
+    const sql = "SELECT * FROM artists ORDER BY id";
+
+    con.query(sql, (err, result) => {
+        res.render('follows/follow', {
+            action: "follow",
+            artists: result
+        });
+    });
+});
+
+router.post('/follows/follow', (req, res) => {
+    const { followed_artist_id, following_artist_id } = req.body;
+
+    const sql = "INSERT INTO follows (followed_at, unfollowed_at, following_artist_id, followed_artist_id) VALUES (NOW(), NULL, ?, ?)";
+
+    con.query(sql, [followed_artist_id, following_artist_id], (err, result) => {
+        res.redirect('/follows');
+    });
+});
+
+// Unfollow Artist
+router.post('/follows/unfollow/:id', (req, res) => {
+    const id = req.params.id;
+
+    const sql = "UPDATE follows SET unfollowed_at = NOW() WHERE id = ?";
+
+    con.query(sql, [id], (err, result) => {
+        res.redirect('/follows');
+    });
+});
+
 // Artists
 router.get('/artists', (req, res) => {
-    var sql = "SELECT id, username FROM artists ORDER BY id";
+    const sql = "SELECT id, username FROM artists ORDER BY id";
 
     con.query(sql, (err, result) => {
         res.render('artists', {
