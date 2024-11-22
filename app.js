@@ -1,23 +1,25 @@
+// Express
 const express = require('express');
-const mysql = require('mysql2');
-const artists = require('./routes/artists');
-
-const host = "localhost";
-const user = "root";
-const password = "[{<kiewbI>}]";
-const database = "music_streaming";
-const port = 3000;
-
 const app = express();
+app.use(express.urlencoded({ 
+    extended: true 
+}));
+
+// EJS
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true }));
 
+// Artists, Albums, Tracks
+const artists = require('./routes/artists');
+const albums = require('./routes/albums');
+const tracks = require('./routes/tracks');
 app.use('/', artists);
+app.use('/', albums);
+app.use('/', tracks);
 
+// Index
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index')
 });
 
-app.listen(port, () => {
-    console.log(`http://${host}:${port}`);
-});
+// Server
+app.listen(3000, console.log(`http://localhost:3000`));

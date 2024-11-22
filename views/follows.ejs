@@ -41,52 +41,77 @@
 
             <!-- Main Content Column -->
             <div class="col-9">
-                <div class="container">
-                    <!-- Artist Table -->
+                <form action="/follows" method="GET">
+                    <div class="d-flex">
+                        <select id="select" name="select" class="form-select" onchange="this.form.submit()">
+                            <option>Select an artist</option>
+                            <% options.forEach(option => { %>
+                                <option value="<%= option.id %>" <%= option.id == id ? 'selected' : '' %>><%= option.username %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </form>
                     <div class="table-container my-4">
-                        <table class="table table-dark table-striped mx-auto" style="width: 90%;">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10%;">Following Artist ID</th>
-                                    <th style="width: 10%;">Followed Artist ID</th>
-                                    <th style="width: 70%;">Followed At</th>
-                                    <th style="width: 10%;">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% follows.forEach(follow => { %>
-                                    <tr>
-                                        <td><%= follow.following_artist_id %></td>
-                                        <td><%= follow.followed_artist_id %></td>
-                                        <td><%= follow.followed_at %></td>
-                                        <td>
-                                            <div class="d-flex justify-content-around">
-                                                <!-- Delete Button (White) -->
-                                                <form action="/follows/unfollow/<%= follow.id %>" method="POST">
-                                                    <button type="submit" class="btn btn-light btn-sm text-dark">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
-                                                            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-                                                        </svg>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Artist Button (Green) -->
-                    <div class="d-flex justify-content-center my-4">
-                        <form action="/follows/follow" method="GET">
-                            <button type="submit" class="btn btn-success">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
-                                    <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                                </svg> Follow Artist
-                            </button>
-                        </form>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 class="text-center my-4">Following</h3>
+                                <table class="table table-dark table-striped mx-auto">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;">ID</th>
+                                            <th style="width: 70%;">Username</th>
+                                            <th style="width: 20%;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% following.forEach(artist => { %>
+                                            <tr>
+                                                <td><%= artist.id %></td>
+                                                <td><%= artist.username %></td>
+                                                <td>
+                                                    <!-- Unfollow Button -->
+                                                    <form action="/follows/unfollow/<%= id %>/<%= artist.id %>" method="POST">
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            Unfollow
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                    
+                            <div class="col-md-6">
+                                <h3 class="text-center my-4">Recommended</h3>
+                                <table class="table table-dark table-striped mx-auto">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;">ID</th>
+                                            <th style="width: 70%;">Username</th>
+                                            <th style="width: 20%;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% recommended.forEach(artist => { %>
+                                            <tr>
+                                                <td><%= artist.id %></td>
+                                                <td><%= artist.username %></td>
+                                                <td>
+                                                    <!-- Follow Button -->
+                                                    <form action="/follows/follow/<%= id %>/<%= artist.id %>" method="POST">
+                                                        <button type="submit" class="btn btn-success btn-sm">
+                                                            Follow
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>  
                 </div>
             </div>
         </div>
