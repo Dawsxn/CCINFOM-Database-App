@@ -39,27 +39,29 @@
             <!-- Explicit -->
             <div class="mb-4">
                 <label for="explicit" class="form-label">Explicit</label>
-                <input type="checkbox" id="explicit" name="explicit" class="form-control bg-secondary text-white" value="<%= track.explicit %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
+                <select id="explicit" name="explicit" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
+                    <option value="1" <%= 1 == track.explicit ? 'selected' : '' %>>Yes</option>
+                    <option value="0" <%= 0 == track.explicit ? 'selected' : '' %>>No</option>
+                </select>
                 <!-- <div class="invalid-feedback">Last name is required.</div> -->
             </div>
 
             <!-- Genre -->
             <div class="mb-4">
                 <label for="genre" class="form-label">Genre</label>
-                <select id="select" name="select" class="form-select" onchange="">
+                <select id="genre" name="genre" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
                     <% genres.forEach(genre => { %>
-                        <option value="<%= genre.id %>"><%= genre.genre %></option>
+                        <option value="<%= genre.id %>" <%= genre.id == track.genre_id ? 'selected' : '' %>><%= genre.genre %></option>
                     <% }); %>
                 </select>
-                <!-- <div class="invalid-feedback">Please provide a bio.</div> -->
             </div>
 
              <!-- Language -->
              <div class="mb-4">
-                <label for="genre" class="form-label">Language</label>
-                <select id="select" name="select" class="form-select" onchange="">
+                <label for="language" class="form-label">Language</label>
+                <select id="language" name="language" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
                     <% languages.forEach(language => { %>
-                        <option value="<%= language.id %>"><%= language.language %></option>
+                        <option value="<%= language.id %>" <%= language.id == track.language_id ? 'selected' : '' %>><%= language.language %></option>
                     <% }); %>
                 </select>
                 <!-- <div class="invalid-feedback">Please provide a bio.</div> -->
@@ -68,9 +70,9 @@
             <!-- Album -->
             <div class="mb-4">
                 <label for="album" class="form-label">Album</label>
-                <select id="select" name="select" class="form-select" onchange="">
+                <select id="album" name="album" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
                     <% albums.forEach(album => { %>
-                        <option value="<%= album.id %>"><%= album.title %></option>
+                        <option value="<%= album.id %>" <%= album.id == track.album_id ? 'selected' : '' %>><%= album.title %></option>
                     <% }); %>
                 </select>
                 <!-- <div class="invalid-feedback">Please provide a bio.</div> -->
@@ -84,7 +86,7 @@
 
         <!-- Back Button -->
         <div class="mt-3 text-center">
-            <form action="/artists" method="GET">
+            <form action="/tracks" method="GET">
                 <button type="submit" class="btn btn-outline-light">Back</button>
             </form>
         </div>
