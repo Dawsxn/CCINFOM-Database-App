@@ -23,6 +23,7 @@ router.get('/follows', (req, res) => {
     });
 });
 
+// Reports
 router.get('/reports', (req, res) => {
     res.render('reports');
 });

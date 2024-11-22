@@ -14,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', artists);
 
+
+// 
 app.get('/', (req, res) => {
     res.render('index');
 });
