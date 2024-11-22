@@ -25,14 +25,6 @@ router.get('/artists', (req, res) => {
 
 // Create Artist
 router.get('/artists/create', (req, res) => {
-    const { username, picture, first_name, last_name, bio } = {
-        username: "",
-        picture: "",
-        first_name: "",
-        last_name: "",
-        bio: ""
-    };
-
     res.render('artists-form', {
         action: "create",
         disabled: false,
