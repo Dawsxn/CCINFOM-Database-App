@@ -25,33 +25,29 @@ router.get('/artists', (req, res) => {
 
 // Create Artist
 router.get('/artists/create', (req, res) => {
-    const { username, picture, first_name, last_name, bio } = {
-        username: "",
-        picture: "",
-        first_name: "",
-        last_name: "",
-        bio: ""
-    };
-
     res.render('artists-form', {
         action: "create",
         disabled: false,
         artist: {
             username: "",
-            picture: "",
+            email_address: "",
+            password: "",
+            profile_picture: "",
             first_name: "",
             last_name: "",
-            bio: ""
+            age: "",
+            biography: "",
+            verified: ""
         }
     });
 });
 
 router.post('/artists/create', (req, res) => {
-    const { username, picture, first_name, last_name, bio } = req.body;
+    const { username, email_address, password, profile_picture, first_name, last_name, age, biography, verified } = req.body;
 
-    const sql = "INSERT INTO artists (username, picture, first_name, last_name, bio) VALUES (?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO artists (username, email_address, password, profile_picture, first_name, last_name, age, biography, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    con.query(sql, [username, picture, first_name, last_name, bio], (err, result) => {
+    con.query(sql, [username, email_address, password, profile_picture, first_name, last_name, age, biography, verified], (err, result) => {
         res.redirect('/artists');
     });
 });
@@ -87,12 +83,12 @@ router.get('/artists/update/:id', (req, res) => {
 });
 
 router.post('/artists/update-artist/:id', (req, res) => {
-    const { username, picture, first_name, last_name, bio } = req.body;
+    const { username, email_address, password, profile_picture, first_name, last_name, age, biography, verified } = req.body;
     const id = req.params.id;
 
-    const sql = "UPDATE artists SET username = ?, picture = ?, first_name = ?, last_name = ?, bio = ? WHERE id = ?";
+    const sql = "UPDATE artists SET username = ?, email_address = ?, password = ?, profile_picture = ?, first_name = ?, last_name = ?, age = ?, biography = ?, verified = ? WHERE id = ?";
 
-    con.query(sql, [username, picture, first_name, last_name, bio, id], (err, result) => {
+    con.query(sql, [username, email_address, password, profile_picture, first_name, last_name, age, biography, verified, id], (err, result) => {
         res.redirect('/artists');
     });
 });
@@ -111,17 +107,12 @@ router.post('/artists/delete/:id', (req, res) => {
 // Follows
 router.get('/follows', (req, res) => {
     const selected = req.query.select;
-
     const sql = "SELECT id, username FROM artists ORDER BY id"
 
-    con.query(sql, (err, result) => {
-        const options = result;
-
+    con.query(sql, (err, options) => {
         const sql = "SELECT a.id, a.username FROM artists a JOIN follows f ON a.id = f.followed_artist_id WHERE f.following_artist_id = ? AND f.unfollowed_at IS NULL ORDER BY a.id";
         
-        con.query(sql, [selected], (err, result) => {
-            const following = result;
-
+        con.query(sql, [selected], (err, following) => {
             const sql = "SELECT a.id, a.username FROM artists a LEFT JOIN follows f ON a.id = f.followed_artist_id AND f.following_artist_id = ? AND f.unfollowed_at is NULL WHERE f.id IS NULL AND a.id != ? ORDER BY a.id";
 
             con.query(sql, [selected, selected], (err, result) => {
