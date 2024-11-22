@@ -15,39 +15,71 @@
     <!-- Main Form Container -->
     <div class="container bg-dark text-white p-5 rounded shadow-lg" id="MainFrame">
         <form action="/artists/<%= action %>" method="POST" class="needs-validation" novalidate>
-            <!-- Username -->
             <div class="mb-4">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" id="username" name="username" class="form-control bg-secondary text-white" value="<%= artist.username %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
                 <div class="invalid-feedback">Please provide a valid username.</div>
             </div>
 
-            <!-- Picture URL -->
             <div class="mb-4">
-                <label for="picture" class="form-label">Picture URL</label>
-                <input type="url" id="picture" name="picture" class="form-control bg-secondary text-white" value="<%= artist.picture %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
+                <label for="email_address" class="form-label">Email Address</label>
+                <input type="email" id="email_address" name="email_address" class="form-control bg-secondary text-white" value="<%= artist.email_address %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
+                <div class="invalid-feedback">Please provide a valid email address</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input type="text" id="password" name="password" class="form-control bg-secondary text-white" value="<%= artist.password %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
+                <div class="invalid-feedback">Please provide a valid password.</div>
+            </div>
+            
+            <div class="mb-4">
+                <label for="birthdate" class="form-label">Birthdate</label>
+                <input type="date" id="birthdate" name="birthdate" class="form-control bg-secondary text-white" value="<%= new Date(artist.birthdate).toISOString().split('T')[0] %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
+                <div class="invalid-feedback">Please provide a birthdate.</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="profile_picture" class="form-label">Profile Picture</label>
+                <input type="url" id="profile_picture" name="profile_picture" class="form-control bg-secondary text-white" value="<%= artist.profile_picture %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
                 <div class="invalid-feedback">Please provide a valid picture URL.</div>
             </div>
 
-            <!-- First Name -->
             <div class="mb-4">
                 <label for="first_name" class="form-label">First Name</label>
                 <input type="text" id="first_name" name="first_name" class="form-control bg-secondary text-white" value="<%= artist.first_name %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
                 <div class="invalid-feedback">First name is required.</div>
             </div>
 
-            <!-- Last Name -->
             <div class="mb-4">
                 <label for="last_name" class="form-label">Last Name</label>
                 <input type="text" id="last_name" name="last_name" class="form-control bg-secondary text-white" value="<%= artist.last_name %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
                 <div class="invalid-feedback">Last name is required.</div>
             </div>
 
-            <!-- Bio -->
             <div class="mb-4">
-                <label for="bio" class="form-label">Bio</label>
-                <textarea id="bio" name="bio" rows="4" class="form-control bg-secondary text-white" <%= disabled ? 'disabled' : '' %> maxlength="255" required><%= artist.bio %></textarea>
-                <div class="invalid-feedback">Please provide a bio.</div>
+                <label for="biography" class="form-label">Biography</label>
+                <textarea id="biography" name="biography" rows="4" class="form-control bg-secondary text-white" <%= disabled ? 'disabled' : '' %> maxlength="255" required><%= artist.biography %></textarea>
+                <div class="invalid-feedback">Please provide a biography.</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="verified" class="form-label">Verified</label>
+                <select id="verified" name="verified" class="form-select" <%= disabled ? 'disabled' : '' %>>
+                    <option value="1" <%= artist.verified == 1 ? 'selected' : '' %>>Yes</option>
+                    <option value="0" <%= artist.verified == 0 ? 'selected' : '' %>>No</option>
+                </select>
+                <div class="invalid-feedback">Please specify if verified or not.</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="country_id" class="form-label">Country</label>
+                <select id="country_id" name="country_id" class="form-select" <%= disabled ? 'disabled' : '' %>>
+                    <% countries.forEach( country => { %>
+                        <option value=<%= country.id %> <%= artist.country_id == country.id ? 'selected' : '' %>><%= country.country %></option>
+                    <% }); %>
+                </select>
+                <div class="invalid-feedback">Please specify country.</div>
             </div>
 
             <!-- Submit Button -->

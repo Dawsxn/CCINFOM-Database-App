@@ -51,7 +51,7 @@ CREATE TABLE `tracks` (
   `album_id` integer NOT NULL,
   FOREIGN KEY (`genre_id`) REFERENCES `genres` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`)
+  FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `follows` (

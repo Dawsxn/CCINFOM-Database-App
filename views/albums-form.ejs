@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albumn Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body class="bg-dark text-white">
+    <!-- Main Header -->
+    <div class="container py-4 text-center">
+        <h1 class="text-light">ChordCloud</h1>
+    </div>
+
+    <!-- Main Form Container -->
+    <div class="container bg-dark text-white p-5 rounded shadow-lg" id="MainFrame">
+        <form action="/albums/<%= action %>" method="POST" class="needs-validation" novalidate>
+            <!-- Title -->
+            <div class="mb-4">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" id="title" name="title" class="form-control bg-secondary text-white" value="<%= albums.title %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
+                <div class="invalid-feedback">Please provide a valid title.</div>
+            </div>
+
+            <!-- Album cover -->
+            <div class="mb-4">
+                <label for="album_cover" class="form-label">Album Cover URL</label>
+                <input type="url" id="album_cover" name="album_cover" class="form-control bg-secondary text-white" value="<%= albums.album_cover %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>
+                <div class="invalid-feedback">Please provide a valid Album Cover URL.</div>
+            </div>
+
+            <!-- Artist_id -->
+            <div class="mb-4">
+                <label for="option_ids" class="form-label">Artist ID</label>
+                <select id="option_ids" name="option_ids" class="form-select" onchange="">
+                    <% option_ids.forEach(option_id => { %>
+                        <option value="<%= option_id.id %>"><%= option_id.id %></option>
+                    <% }); %>
+                </select>
+                <!-- <div class="invalid-feedback">Please provide a bio.</div> -->
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success" <%= disabled ? 'disabled' : '' %>>Submit</button>
+            </div>
+        </form>
+
+        <!-- Back Button -->
+        <div class="mt-3 text-center">
+            <form action="/albums" method="GET">
+                <button type="submit" class="btn btn-outline-light">Back</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        // Enable Bootstrap form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+</body>
+</html>
