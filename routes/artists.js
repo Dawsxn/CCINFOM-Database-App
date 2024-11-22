@@ -25,29 +25,34 @@ router.get('/artists', (req, res) => {
 
 // Create Artist
 router.get('/artists/create', (req, res) => {
-    res.render('artists-form', {
-        action: "create",
-        disabled: false,
-        artist: {
-            username: "",
-            email_address: "",
-            password: "",
-            profile_picture: "",
-            first_name: "",
-            last_name: "",
-            age: "",
-            biography: "",
-            verified: ""
-        }
-    });
+    con.query("SELECT * FROM countries", (err, countries) => {
+        res.render('artists-form', {
+            action: "create",
+            disabled: false,
+            artist: {
+                username: "",
+                email_address: "",
+                password: "",
+                birthdate: new Date(),
+                profile_picture: "",
+                first_name: "",
+                last_name: "",
+                biography: "",
+                verified: "",
+                country: ""
+            },
+            countries: countries
+        });
+    })
 });
 
 router.post('/artists/create', (req, res) => {
-    const { username, email_address, password, profile_picture, first_name, last_name, age, biography, verified } = req.body;
+    const { username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id } = req.body;
 
-    const sql = "INSERT INTO artists (username, email_address, password, profile_picture, first_name, last_name, age, biography, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO artists (username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    con.query(sql, [username, email_address, password, profile_picture, first_name, last_name, age, biography, verified], (err, result) => {
+    con.query(sql, [username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id], (err, result) => {
+        console.log(err);
         res.redirect('/artists');
     });
 });
@@ -58,13 +63,16 @@ router.get('/artists/read/:id', (req, res) => {
 
     const sql = "SELECT * FROM artists WHERE id = ?";
 
-    con.query(sql, [id], (err, result) => {
-        res.render('artists-form', { 
-            action: "read",
-            disabled: true,
-            artist: result[0]
+    con.query("SELECT * FROM countries", (err, countries) => {
+        con.query(sql, [id], (err, artists) => {
+            res.render('artists-form', {
+                action: "create",
+                disabled: true,
+                artist: artists[0],
+                countries: countries
+            });
         });
-    });
+    })    
 });
 
 // Update Artist
@@ -73,22 +81,27 @@ router.get('/artists/update/:id', (req, res) => {
 
     const sql = "SELECT * FROM artists WHERE id = ?";
 
-    con.query(sql, [id], (err, result) => {
-        res.render('artists-form', {
-            action: `update-artist/${id}`,
-            disabled: false,
-            artist: result[0]
+    con.query("SELECT * FROM countries", [id], (err, countries) => {
+        
+        con.query(sql, [id], (err, artists) => {
+            res.render('artists-form', {
+                action: `update-artist/${id}`,
+                disabled: false,
+                artist: artists[0],
+                countries: countries
+            });
         });
     });
+    
 });
 
 router.post('/artists/update-artist/:id', (req, res) => {
-    const { username, email_address, password, profile_picture, first_name, last_name, age, biography, verified } = req.body;
+    const { username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id } = req.body;
     const id = req.params.id;
 
-    const sql = "UPDATE artists SET username = ?, email_address = ?, password = ?, profile_picture = ?, first_name = ?, last_name = ?, age = ?, biography = ?, verified = ? WHERE id = ?";
+    const sql = "UPDATE artists SET username = ?, email_address = ?, password = ?, birthdate = ?, profile_picture = ?, first_name = ?, last_name = ?, biography = ?, verified = ?, country_id = ? WHERE id = ?";
 
-    con.query(sql, [username, email_address, password, profile_picture, first_name, last_name, age, biography, verified, id], (err, result) => {
+    con.query(sql, [username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id, id], (err, result) => {
         res.redirect('/artists');
     });
 });
