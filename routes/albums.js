@@ -6,7 +6,7 @@ const router = express.Router();
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "[{<kiewbI>}]",
+    password: "Co_Stephen01.",
     database: "music_streaming"
 });
 
@@ -32,14 +32,14 @@ router.get('/albums/create', (req, res) => {
         artist_id: ""
     };
 
-    con.query("SELECT * FROM albums", (err, option_ids) => {
+    con.query("SELECT id, username FROM artists", (err, option_ids) => {
         res.render('albums-form', {
             action: "create",
             disabled: false,
             albums: {
                 title: "",
                 album_cover: "",
-                artist_id: ""
+                
             },
             option_ids: option_ids,
         });
@@ -47,28 +47,27 @@ router.get('/albums/create', (req, res) => {
 });
 
 router.post('/albums/create', (req, res) => {
-    const { title, album_cover, artist_id } = req.body;
+    const { title, album_cover, option_ids } = req.body;
 
     const sql = "INSERT INTO albums (title, album_cover, artist_id) VALUES (?, ?, ?)";
 
-    con.query(sql, [ title, album_cover, artist_id ], (err, result) => {
+    con.query(sql, [ title, album_cover, option_ids ], (err, result) => {
         res.redirect('/albums');
     });
 });
 
 // Read Album
-router.get('/albums/read-album/:id', (req, res) => {
+router.get('/albums/read/:id', (req, res) => {
     const id = req.params.id;
 
     const sql = "SELECT * FROM albums WHERE id = ?";
 
-    con.query("SELECT * FROM albums", (err, option_ids) => {
+    con.query("SELECT id, username FROM artists", (err, option_ids) => {
         con.query(sql, [id], (err, result) => {
             res.render('albums-form', { 
                 action: "",
-                disabled: false,
+                disabled: true,
                 albums: result[0],
-                readonly: true,
                 option_ids: option_ids,
             });
             
@@ -78,24 +77,26 @@ router.get('/albums/read-album/:id', (req, res) => {
 });
 
 // Update Album
-router.get('/albums/update-album/:id', (req, res) => {
+router.get('/albums/update/:id', (req, res) => {
     const id = req.params.id;
 
     const sql = "SELECT * FROM albums WHERE id = ?";
 
-    con.query("SELECT * FROM albums", (err, option_ids) => {
+    con.query("SELECT id, username FROM artists", [id], (err, option_ids) => {
         con.query(sql, [id], (err, result) => {
             res.render('albums-form', {
                 action: `update/${id}`,
                 disabled: false,
                 albums: result[0],
-
-                option_ids: option_ids,
+                option_ids: option_ids
+                
             });
         });
     });
 });
-router.post('/albums/update-album/:id', (req, res) => {
+
+
+router.post('/albums/update/:id', (req, res) => {
     const id = req.params.id;
 
     const { title, album_cover, artist_id } = req.body;
@@ -103,13 +104,12 @@ router.post('/albums/update-album/:id', (req, res) => {
     const sql = "UPDATE albums SET title = ?, album_cover = ?, artist_id = ? WHERE id = ?";
 
     con.query(sql, [title, album_cover, artist_id, id], (err, result) => {
-        console.log(err);
         res.redirect('/albums');
     });
 });
 
 // Delete Album
-router.post('/albums/delete-album/:id', (req, res) => {
+router.post('/albums/delete/:id', (req, res) => {
     const id = req.params.id;
 
     const sql = "DELETE FROM albums WHERE id = ?";
