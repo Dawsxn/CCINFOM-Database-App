@@ -203,8 +203,8 @@ router.get('/reports/tracks', (req, res) => {
             tracks t
         LEFT JOIN 
             streams s ON s.streamed_track_id = t.id AND
-            YEAR(s.streamed_at) < ? OR
-            (MONTH(s.streamed_at) <= ? AND YEAR(s.streamed_at) = ?)
+            (YEAR(s.streamed_at) < ? OR
+            (MONTH(s.streamed_at) <= ? AND YEAR(s.streamed_at) = ?))
         GROUP BY
             t.id
         ORDER BY 
