@@ -56,7 +56,6 @@ router.post('/tracks/create', (req, res) => {
     const sql = "INSERT INTO tracks (title, audio, duration, explicit, genre_id, language_id, album_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     con.query(sql, [title, audio, duration, explicit, genre, language, album], (err, result) => {
-        // console.log(err);
         res.redirect('/tracks');
     });
 });

@@ -104,7 +104,6 @@ router.post('/albums/update/:id', (req, res) => {
     const sql = "UPDATE albums SET title = ?, album_cover = ?, artist_id = ? WHERE id = ?";
 
     con.query(sql, [title, album_cover, artist_id, id], (err, result) => {
-        console.log(err);
         res.redirect('/albums');
     });
 });
@@ -156,7 +155,6 @@ router.post('/likes/like/:liking_artist_id/:liked_album_id', (req, res) => {
     const sql = "INSERT INTO likes (liked_at, unliked_at, liking_artist_id, liked_album_id) VALUES (NOW(), NULL, ?, ?)"
 
     con.query(sql, [liking_id, liked_id], (err, result) => {
-        console.log(err);
         res.redirect(`/likes/?select=${liking_id}`);
     });
 });
@@ -169,7 +167,6 @@ router.post('/likes/unlike/:liking_artist_id/:liked_album_id', (req, res) => {
     const sql = "UPDATE likes SET unliked_at = NOW() WHERE liking_artist_id = ? AND liked_album_id = ? AND unliked_at IS NULL";
 
     con.query(sql, [liking_id, liked_id], (err, result) => {
-        console.log(err);
         res.redirect(`/likes/?select=${liking_id}`);
     });
 });
