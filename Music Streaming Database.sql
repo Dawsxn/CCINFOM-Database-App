@@ -10,7 +10,7 @@ CREATE TABLE `countries` (
 CREATE TABLE `artists` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) UNIQUE NOT NULL,
-  `email_address` varchar(255) NOT NULL,
+  `email_address` varchar(255) UNIQUE NOT NULL,
   `password` varchar(255) NOT NULL,
   `birthdate` date NOT NULL,
   `profile_picture` varchar(255) NOT NULL,

@@ -15,6 +15,9 @@
     <!-- Main Form Container -->
     <div class="container bg-dark text-white p-5 rounded shadow-lg" id="MainFrame">
         <form action="/artists/<%= action %>" method="POST" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <div class="text-danger text-weight-bold text-center"><%= error %></div>
+            </div>
             <div class="mb-4">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" id="username" name="username" class="form-control bg-secondary text-white" value="<%= artist.username %>" <%= disabled ? 'disabled' : '' %> maxlength="255" required>

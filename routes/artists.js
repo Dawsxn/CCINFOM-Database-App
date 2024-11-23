@@ -27,6 +27,7 @@ router.get('/artists', (req, res) => {
 router.get('/artists/create', (req, res) => {
     con.query("SELECT * FROM countries", (err, countries) => {
         res.render('artists-form', {
+            error: "",
             action: "create",
             disabled: false,
             artist: {
@@ -52,7 +53,31 @@ router.post('/artists/create', (req, res) => {
     const sql = "INSERT INTO artists (username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     con.query(sql, [username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id], (err, result) => {
-        res.redirect('/artists');
+        if (err) {
+            con.query("SELECT * FROM countries", (err, countries) => {
+                return res.render('artists-form', {
+                    error: "Please provide a unique username and email address.",
+                    action: "create",
+                    disabled: false,
+                    artist: {
+                        username: username,
+                        email_address: email_address,
+                        password: password,
+                        birthdate: birthdate,
+                        profile_picture: profile_picture,
+                        first_name: first_name,
+                        last_name: last_name,
+                        biography: biography,
+                        verified: verified,
+                        country: country_id
+                    },
+                    countries: countries
+                });
+            })
+        }
+        else {
+            res.redirect('/artists');
+        }
     });
 });
 
@@ -65,6 +90,7 @@ router.get('/artists/read/:id', (req, res) => {
     con.query("SELECT * FROM countries", (err, countries) => {
         con.query(sql, [id], (err, artists) => {
             res.render('artists-form', {
+                error: "",
                 action: "create",
                 disabled: true,
                 artist: artists[0],
@@ -84,6 +110,7 @@ router.get('/artists/update/:id', (req, res) => {
         
         con.query(sql, [id], (err, artists) => {
             res.render('artists-form', {
+                error: "",
                 action: `update/${id}`,
                 disabled: false,
                 artist: artists[0],
@@ -101,7 +128,31 @@ router.post('/artists/update/:id', (req, res) => {
     const sql = "UPDATE artists SET username = ?, email_address = ?, password = ?, birthdate = ?, profile_picture = ?, first_name = ?, last_name = ?, biography = ?, verified = ?, country_id = ? WHERE id = ?";
 
     con.query(sql, [username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id, id], (err, result) => {
-        res.redirect('/artists');
+        if (err) {
+            con.query("SELECT * FROM countries", (err, countries) => {
+                return res.render('artists-form', {
+                    error: "Please provide a unique username and email address.",
+                    action: "create",
+                    disabled: false,
+                    artist: {
+                        username: username,
+                        email_address: email_address,
+                        password: password,
+                        birthdate: birthdate,
+                        profile_picture: profile_picture,
+                        first_name: first_name,
+                        last_name: last_name,
+                        biography: biography,
+                        verified: verified,
+                        country: country_id
+                    },
+                    countries: countries
+                });
+            })
+        }
+        else {
+            res.redirect('/artists');
+        }
     });
 });
 
