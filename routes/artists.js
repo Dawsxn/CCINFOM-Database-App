@@ -177,16 +177,15 @@ router.get('/reports/artists', (req, res) => {
             artists a
         LEFT JOIN 
             follows f ON f.followed_artist_id = a.id AND
-            YEAR(f.followed_at) <= ? AND
-            MONTH(f.followed_at) <= ? AND
-            ((YEAR(f.unfollowed_at) > ? AND MONTH(f.unfollowed_at) > ?) OR f.unfollowed_at IS NULL)
+            (YEAR(f.followed_at) < ? OR (YEAR(f.followed_at) = ? AND MONTH(f.followed_at) <= ?)) AND
+            (YEAR(f.unfollowed_at) > ? OR (YEAR(f.unfollowed_at) = ? AND MONTH(f.unfollowed_at) > ?) OR f.unfollowed_at IS NULL)
         GROUP BY
             a.id
         ORDER BY 
             followers DESC;
     `
 
-    con.query(sql, [year, month, year, month], (err, result) => {
+    con.query(sql, [year, year, month, year, year, month], (err, result) => {
         res.render('artists-report', {
             artists: result,
             month: month,
