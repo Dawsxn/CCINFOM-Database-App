@@ -33,12 +33,12 @@
             <!-- Artist_id -->
             <div class="mb-4">
                 <label for="option_ids" class="form-label">Artist ID</label>
-                <select id="option_ids" name="artist_id" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
+                <select id="option_ids" name="artist_id" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %> required>
                     <% option_ids.forEach(option_id => { %>
                         <option value="<%= option_id.id %>" <%= option_id.id === albums.artist_id ? 'selected' : '' %>><%= option_id.username %>#<%= option_id.id %></option>
                     <% }); %>
                 </select>
-                <!-- <div class="invalid-feedback">Please provide a bio.</div> -->
+                <div class="invalid-feedback">Please select an artist.</div>
             </div>
 
             <!-- Submit Button -->

@@ -66,7 +66,7 @@
 
             <div class="mb-4">
                 <label for="verified" class="form-label">Verified</label>
-                <select id="verified" name="verified" class="form-select" <%= disabled ? 'disabled' : '' %>>
+                <select id="verified" name="verified" class="form-select" <%= disabled ? 'disabled' : '' %> required>
                     <option value="1" <%= artist.verified == 1 ? 'selected' : '' %>>Yes</option>
                     <option value="0" <%= artist.verified == 0 ? 'selected' : '' %>>No</option>
                 </select>
@@ -75,7 +75,7 @@
 
             <div class="mb-4">
                 <label for="country_id" class="form-label">Country</label>
-                <select id="country_id" name="country_id" class="form-select" <%= disabled ? 'disabled' : '' %>>
+                <select id="country_id" name="country_id" class="form-select" <%= disabled ? 'disabled' : '' %> required>
                     <% countries.forEach( country => { %>
                         <option value=<%= country.id %> <%= artist.country_id == country.id ? 'selected' : '' %>><%= country.country %></option>
                     <% }); %>

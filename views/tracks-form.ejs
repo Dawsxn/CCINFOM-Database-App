@@ -40,43 +40,44 @@
             <!-- Explicit -->
             <div class="mb-4">
                 <label for="explicit" class="form-label">Explicit</label>
-                <select id="explicit" name="explicit" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
+                <select id="explicit" name="explicit" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %> required>
                     <option value="1" <%= 1 == track.explicit ? 'selected' : '' %>>Yes</option>
                     <option value="0" <%= 0 == track.explicit ? 'selected' : '' %>>No</option>
                 </select>
-                <!-- <div class="invalid-feedback">Last name is required.</div> -->
+                <div class="invalid-feedback">Please specify if explicit or not.</div>
             </div>
 
             <!-- Genre -->
             <div class="mb-4">
                 <label for="genre" class="form-label">Genre</label>
-                <select id="genre" name="genre" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
+                <select id="genre" name="genre" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %> required>
                     <% genres.forEach(genre => { %>
                         <option value="<%= genre.id %>" <%= genre.id == track.genre_id ? 'selected' : '' %>><%= genre.genre %></option>
                     <% }); %>
                 </select>
+                <div class="invalid-feedback">Please select a genre.</div>
             </div>
 
              <!-- Language -->
              <div class="mb-4">
                 <label for="language" class="form-label">Language</label>
-                <select id="language" name="language" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
+                <select id="language" name="language" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %> required>
                     <% languages.forEach(language => { %>
                         <option value="<%= language.id %>" <%= language.id == track.language_id ? 'selected' : '' %>><%= language.language %></option>
                     <% }); %>
                 </select>
-                <!-- <div class="invalid-feedback">Please provide a bio.</div> -->
+                <div class="invalid-feedback">Please select a language.</div>
             </div>
 
             <!-- Album -->
             <div class="mb-4">
                 <label for="album" class="form-label">Album</label>
-                <select id="album" name="album" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
+                <select id="album" name="album" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %> required>
                     <% albums.forEach(album => { %>
                         <option value="<%= album.id %>" <%= album.id == track.album_id ? 'selected' : '' %>><%= album.title %>#<%= album.id %></option>
                     <% }); %>
                 </select>
-                <!-- <div class="invalid-feedback">Please provide a bio.</div> -->
+                <div class="invalid-feedback">Please select an album.</div>
             </div>
 
             <!-- Submit Button -->
