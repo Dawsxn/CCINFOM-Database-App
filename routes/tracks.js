@@ -131,24 +131,23 @@ router.get('/reports/tracks', (req, res) => {
 
     const sql = `
         SELECT 
-            t.id AS track_id,
-            t.title AS track_title,
+            t.id,
+            t.title,
             COUNT(s.streaming_artist_id) AS streams
         FROM 
             tracks t
         LEFT JOIN 
-            streams s ON s.streamed_track_id = t.id
-        WHERE
-            YEAR(s.streamed_at) <= 2024 AND
-            MONTH(s.streamed_at) <= 12
+            streams s ON s.streamed_track_id = t.id AND
+            YEAR(s.streamed_at) <= ? AND
+            MONTH(s.streamed_at) <= ?
         GROUP BY
             t.id
         ORDER BY 
             streams DESC;
     `
 
-    con.query(sql, [year, month, year, month], (err, result) => {
-        res.render('tracks', {
+    con.query(sql, [year, month], (err, result) => {
+        res.render('tracks-report', {
             tracks: result
         });
     });

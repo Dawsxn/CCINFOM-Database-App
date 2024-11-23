@@ -177,17 +177,16 @@ router.get('/reports/albums', (req, res) => {
 
     const sql = `
         SELECT 
-            al.id AS album_id,
-            al.title AS album_title,
+            al.id,
+            al.title,
             COUNT(DISTINCT l.liking_artist_id) AS likes
         FROM 
             albums al
         LEFT JOIN 
-            likes l ON l.liked_album_id = al.id
-        WHERE
+            likes l ON l.liked_album_id = al.id AND
             YEAR(l.liked_at) <= ? AND
             MONTH(l.liked_at) <= ? AND
-            (YEAR(l.unliked_at) > ? OR MONTH(l.unliked_at) > ? OR l.unliked_at IS NULL)
+            (YEAR(l.unliked_at) > ? OR MONTH(l.unliked_at) > ? OR l.unliked_at IS NULL) 
         GROUP BY
             al.id
         ORDER BY 
@@ -195,7 +194,7 @@ router.get('/reports/albums', (req, res) => {
     `
 
     con.query(sql, [year, month, year, month], (err, result) => {
-        res.render('albums', {
+        res.render('albums-report', {
             albums: result
         });
     });
