@@ -125,7 +125,8 @@ router.post('/tracks/update/:id', (req, res) => {
     });
 });
 
-// Delete Tracks
+// DELETE TRACKS
+
 router.post('/tracks/delete/:id', (req, res) => {
     const id = req.params.id;
 
@@ -136,7 +137,62 @@ router.post('/tracks/delete/:id', (req, res) => {
     });
 });
 
-// Tracks Report
+// STREAMS (GET)
+
+router.get('/streams', (req, res) => {
+    const selected = req.query.select;
+
+    const sql = "SELECT id, username FROM artists ORDER BY id";
+
+    con.query(sql, (err, options) => {
+        if (!selected) {
+            // If no artist is selected, send an empty array for tracks and counts
+            return res.render('streams', {
+                id: selected,
+                options: options,
+                tracks: [],
+                counts: {}
+            });
+        }
+
+        // If an artist is selected, fetch the tracks and counts
+        const sql = "SELECT * FROM tracks";
+        con.query(sql, [selected], (err, tracks) => {
+            const sql = "SELECT streamed_track_id, COUNT(*) AS streamcount FROM streams GROUP BY streamed_track_id";
+            con.query(sql, (err, countsResults) => {
+                
+                const counts = {};
+                countsResults.forEach(row => {
+                    counts[row.streamed_track_id] = row.streamcount;
+                });
+
+                res.render('streams', {
+                    id: selected,
+                    options: options,
+                    tracks: tracks,
+                    counts: counts
+                });
+            });
+        });
+    });
+});
+
+
+// STREAMS (POST)
+
+router.post('/streams/stream/:streaming_id/:streamed_id', (req, res) => {
+    const streaming_id = req.params.streaming_id;
+    const streamed_id = req.params.streamed_id;
+
+    const sql = "INSERT INTO streams (streaming_artist_id, streamed_track_id, streamed_at) VALUES (?, ?, NOW())"
+
+    con.query(sql, [streaming_id, streamed_id], (err, result) => {
+        res.redirect(`/streams/?select=${streaming_id}`);
+    });
+});
+
+
+// TRACKS REPORTS
 router.get('/reports/tracks', (req, res) => {
     const { year, month } = req.query;
 
@@ -159,7 +215,9 @@ router.get('/reports/tracks', (req, res) => {
 
     con.query(sql, [year, month], (err, result) => {
         res.render('tracks-report', {
-            tracks: result
+            tracks: result,
+            month: month,
+            year: year
         });
     });
 });

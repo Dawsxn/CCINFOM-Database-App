@@ -188,7 +188,9 @@ router.get('/reports/artists', (req, res) => {
 
     con.query(sql, [year, month, year, month], (err, result) => {
         res.render('artists-report', {
-            artists: result
+            artists: result,
+            month: month,
+            year: year
         });
     });
 });
