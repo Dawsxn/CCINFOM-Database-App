@@ -84,7 +84,7 @@ router.get('/artists/update/:id', (req, res) => {
         
         con.query(sql, [id], (err, artists) => {
             res.render('artists-form', {
-                action: `update-artist/${id}`,
+                action: `update/${id}`,
                 disabled: false,
                 artist: artists[0],
                 countries: countries
@@ -94,7 +94,7 @@ router.get('/artists/update/:id', (req, res) => {
     
 });
 
-router.post('/artists/update-artist/:id', (req, res) => {
+router.post('/artists/update/:id', (req, res) => {
     const { username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id } = req.body;
     const id = req.params.id;
 

@@ -10,13 +10,13 @@ CREATE TABLE `countries` (
 CREATE TABLE `artists` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) UNIQUE NOT NULL,
-  `email_address` varchar(255) UNIQUE NOT NULL,
+  `email_address` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `birthdate` date NOT NULL,
-  `profile_picture` varchar(255),
-  `first_name` varchar(255),
-  `last_name` varchar(255),
-  `biography` varchar(255),
+  `profile_picture` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `biography` varchar(255) NOT NULL,
   `verified` boolean NOT NULL,
   `country_id` integer NOT NULL,
   FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE
@@ -25,7 +25,7 @@ CREATE TABLE `artists` (
 CREATE TABLE `albums` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255) UNIQUE NOT NULL,
-  `album_cover` varchar(255),
+  `album_cover` varchar(255) NOT NULL,
   `artist_id` integer NOT NULL,
   FOREIGN KEY (`artist_id`) REFERENCES `artists` (`id`) ON DELETE CASCADE
 );
@@ -43,7 +43,7 @@ CREATE TABLE `languages` (
 CREATE TABLE `tracks` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255) UNIQUE NOT NULL,
-  `audio` varchar(255) UNIQUE NOT NULL,
+  `audio` varchar(255) NOT NULL,
   `duration` integer NOT NULL,
   `explicit` boolean NOT NULL,
   `genre_id` integer NOT NULL,

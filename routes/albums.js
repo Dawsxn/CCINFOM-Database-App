@@ -6,7 +6,7 @@ const router = express.Router();
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Co_Stephen01.",
+    password: "[{<kiewbI>}]",
     database: "music_streaming"
 });
 
@@ -104,6 +104,7 @@ router.post('/albums/update/:id', (req, res) => {
     const sql = "UPDATE albums SET title = ?, album_cover = ?, artist_id = ? WHERE id = ?";
 
     con.query(sql, [title, album_cover, artist_id, id], (err, result) => {
+        console.log(err);
         res.redirect('/albums');
     });
 });
@@ -133,10 +134,10 @@ router.get('/likes', (req, res) => {
         con.query(sql, [selected], (err, result) => {
             const liking = result;
 
-            const sql = "SELECT a.id, a.username FROM artists a LEFT JOIN likes l ON a.id = l.liked_album_id AND l.liking_artist_id = ? AND l.unliked_at is NULL WHERE l.id IS NULL AND a.id != ? ORDER BY a.id";
+            const sql = "SELECT a.id, a.title FROM albums a LEFT JOIN likes l ON a.id = l.liked_album_id AND l.liking_artist_id = ? AND l.unliked_at is NULL WHERE l.id IS NULL AND a.id != ? ORDER BY a.id";
 
             con.query(sql, [selected, selected], (err, result) => {
-                res.render('Likes', {
+                res.render('likes', {
                     id: selected,
                     options: options,
                     liking: liking,
@@ -155,18 +156,20 @@ router.post('/likes/like/:liking_artist_id/:liked_album_id', (req, res) => {
     const sql = "INSERT INTO likes (liked_at, unliked_at, liking_artist_id, liked_album_id) VALUES (NOW(), NULL, ?, ?)"
 
     con.query(sql, [liking_id, liked_id], (err, result) => {
+        console.log(err);
         res.redirect(`/likes/?select=${liking_id}`);
     });
 });
 
 // Unlike album
-router.post('/likes/unlikes/:liking_artist_id/:liked_album_id', (req, res) => {
+router.post('/likes/unlike/:liking_artist_id/:liked_album_id', (req, res) => {
     const liking_id = req.params.liking_artist_id;
     const liked_id = req.params.liked_album_id;
 
-    const sql = "UPDATE likes SET unliked_at = NOW() WHERE liking_artist_id = ? AND liked_artist_id = ? AND unliked_at IS NULL";
+    const sql = "UPDATE likes SET unliked_at = NOW() WHERE liking_artist_id = ? AND liked_album_id = ? AND unliked_at IS NULL";
 
     con.query(sql, [liking_id, liked_id], (err, result) => {
+        console.log(err);
         res.redirect(`/likes/?select=${liking_id}`);
     });
 });
