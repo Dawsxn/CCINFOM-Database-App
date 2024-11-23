@@ -7,7 +7,7 @@ const mysql = require('mysql2');
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "mysqlpw",
+    password: "[{<kiewbI>}]",
     database: "music_streaming"
 });
 con.connect();
@@ -215,7 +215,9 @@ router.get('/reports/tracks', (req, res) => {
 
     con.query(sql, [year, month], (err, result) => {
         res.render('tracks-report', {
-            tracks: result
+            tracks: result,
+            month: month,
+            year: year
         });
     });
 });

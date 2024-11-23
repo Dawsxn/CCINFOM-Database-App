@@ -195,7 +195,9 @@ router.get('/reports/albums', (req, res) => {
 
     con.query(sql, [year, month, year, month], (err, result) => {
         res.render('albums-report', {
-            albums: result
+            albums: result,
+            month: month,
+            year: year
         });
     });
 });
