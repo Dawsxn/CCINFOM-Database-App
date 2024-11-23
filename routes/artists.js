@@ -52,7 +52,6 @@ router.post('/artists/create', (req, res) => {
     const sql = "INSERT INTO artists (username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     con.query(sql, [username, email_address, password, birthdate, profile_picture, first_name, last_name, biography, verified, country_id], (err, result) => {
-        console.log(err);
         res.redirect('/artists');
     });
 });
@@ -120,6 +119,7 @@ router.post('/artists/delete/:id', (req, res) => {
 // Follows
 router.get('/follows', (req, res) => {
     const selected = req.query.select;
+
     const sql = "SELECT id, username FROM artists ORDER BY id"
 
     con.query(sql, (err, options) => {
@@ -164,9 +164,33 @@ router.post('/follows/unfollow/:following_id/:followed_id', (req, res) => {
     });
 });
 
-// Report
-router.get('/reports', (req, res) => {
-    res.render('reports');
+// Artists Report
+router.get('/reports/artists', (req, res) => {
+    const { year, month } = req.query;
+
+    const sql = `
+        SELECT 
+            a.id,
+            a.username,
+            COUNT(DISTINCT f.following_artist_id) AS followers
+        FROM 
+            artists a
+        LEFT JOIN 
+            follows f ON f.followed_artist_id = a.id AND
+            YEAR(f.followed_at) <= ? AND
+            MONTH(f.followed_at) <= ? AND
+            (YEAR(f.unfollowed_at) > ? OR MONTH(f.unfollowed_at) > ? OR f.unfollowed_at IS NULL)
+        GROUP BY
+            a.id
+        ORDER BY 
+            followers DESC;
+    `
+
+    con.query(sql, [year, month, year, month], (err, result) => {
+        res.render('artists', {
+            artists: result
+        });
+    });
 });
 
 // Export

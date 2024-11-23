@@ -21,5 +21,10 @@ app.get('/', (req, res) => {
     res.render('index')
 });
 
+// Reports
+app.get('/reports', (req, res) => {
+    res.render('reports');
+});
+
 // Server
 app.listen(3000, console.log(`http://localhost:3000`));

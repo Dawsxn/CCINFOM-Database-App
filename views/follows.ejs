@@ -44,7 +44,7 @@
                 <form action="/follows" method="GET">
                     <div class="d-flex">
                         <select id="select" name="select" class="form-select" onchange="this.form.submit()">
-                            <option value="" selected>Select an Artist</option>
+                            <option value="" selected disabled>Select an Artist</option>
                             <% options.forEach(option => { %>
                                 <option value="<%= option.id %>" <%= option.id == id ? 'selected' : '' %>><%= option.username %></option>
                             <% }); %>

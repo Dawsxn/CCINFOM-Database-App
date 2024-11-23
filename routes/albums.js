@@ -6,7 +6,7 @@ const router = express.Router();
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Co_Stephen01.",
+    password: "[{<kiewbI>}]",
     database: "music_streaming"
 });
 
@@ -171,6 +171,35 @@ router.post('/likes/unlikes/:liking_artist_id/:liked_album_id', (req, res) => {
     });
 });
 
+// Albums Report
+router.get('/reports/albums', (req, res) => {
+    const { year, month } = req.query;
+
+    const sql = `
+        SELECT 
+            al.id AS album_id,
+            al.title AS album_title,
+            COUNT(DISTINCT l.liking_artist_id) AS likes
+        FROM 
+            albums al
+        LEFT JOIN 
+            likes l ON l.liked_album_id = al.id
+        WHERE
+            YEAR(l.liked_at) <= ? AND
+            MONTH(l.liked_at) <= ? AND
+            (YEAR(l.unliked_at) > ? OR MONTH(l.unliked_at) > ? OR l.unliked_at IS NULL)
+        GROUP BY
+            al.id
+        ORDER BY 
+            likes DESC;
+    `
+
+    con.query(sql, [year, month, year, month], (err, result) => {
+        res.render('albums', {
+            albums: result
+        });
+    });
+});
 
 module.exports = router;
 

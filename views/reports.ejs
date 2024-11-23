@@ -43,52 +43,90 @@
             <div class="col-9 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
                 <div class="container">
                     <div class="row g-4 w-100">
-                        <!-- Card 1 -->
                         <div class="col-md-4">
                             <div class="card bg-dark text-white border-light shadow" style="height: 28rem;">
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <div>
                                         <h5 class="card-title">Top Artists</h5>
                                         <p class="card-text">Discover the most followed artists of a specific month.</p>
-                                        <div class="mb-3">
-                                            <label for="yearSelect1" class="form-label text-light">Select Year</label>
-                                            <select class="form-select bg-dark text-white border-light" id="yearSelect1">
-                                                <!-- Year options will go here -->
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="monthSelect1" class="form-label text-light">Select Month</label>
-                                            <select class="form-select bg-dark text-white border-light" id="monthSelect1">
-                                                <!-- Month options will go here -->
-                                            </select>
-                                        </div>
+                                        <form action="/reports/artists" method="get">
+
+                                            <div class="mb-3">
+                                                <label for="yearSelect1" class="form-label text-light">Select Year</label>
+                                                <select class="form-select bg-dark text-white border-light" id="yearSelect1" name="year">
+                                                    <option value="2022">2022</option>
+                                                    <option value="2023">2023</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="monthSelect1" class="form-label text-light">Select Month</label>
+                                                <select class="form-select bg-dark text-white border-light" id="monthSelect1" name="month">
+                                                    <option value="1">January</option>
+                                                    <option value="2">February</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-light d-block">View Artists</button>
+                                        </form>
                                     </div>
-                                    <a href="/top-artists" class="btn btn-light d-block">View Artists</a>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Card 2 -->
                         <div class="col-md-4">
                             <div class="card bg-dark text-white border-light shadow" style="height: 28rem;">
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <div>
                                         <h5 class="card-title">Trending Albums</h5>
                                         <p class="card-text">Find out the top trending albums of a specific month.</p>
-                                        <div class="mb-3">
-                                            <label for="yearSelect2" class="form-label text-light">Select Year</label>
-                                            <select class="form-select bg-dark text-white border-light" id="yearSelect2">
-                                                <!-- Year options will go here -->
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="monthSelect2" class="form-label text-light">Select Month</label>
-                                            <select class="form-select bg-dark text-white border-light" id="monthSelect2">
-                                                <!-- Month options will go here -->
-                                            </select>
-                                        </div>
+                                        <form action="/reports/albums" method="get">
+
+                                            <div class="mb-3">
+                                                <label for="yearSelect2" class="form-label text-light">Select Year</label>
+                                                <select class="form-select bg-dark text-white border-light" id="yearSelect2" name="year">
+                                                    <option value="2022">2022</option>
+                                                    <option value="2023">2023</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="monthSelect2" class="form-label text-light">Select Month</label>
+                                                <select class="form-select bg-dark text-white border-light" id="monthSelect2" name="month">
+                                                    <option value="1">January</option>
+                                                    <option value="2">February</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-light d-block">View Albums</button>
+                                        </form>
                                     </div>
-                                    <a href="/trending-albums" class="btn btn-light d-block">View Albums</a>
                                 </div>
                             </div>
                         </div>
@@ -100,20 +138,40 @@
                                     <div>
                                         <h5 class="card-title">Hot Tracks</h5>
                                         <p class="card-text">Check out the hottest tracks rocking the charts of a specific month.</p>
-                                        <div class="mb-3">
-                                            <label for="yearSelect3" class="form-label text-light">Select Year</label>
-                                            <select class="form-select bg-dark text-white border-light" id="yearSelect3">
-                                                <!-- Year options will go here -->
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="monthSelect3" class="form-label text-light">Select Month</label>
-                                            <select class="form-select bg-dark text-white border-light" id="monthSelect3">
-                                                <!-- Month options will go here -->
-                                            </select>
-                                        </div>
+                                        <form action="/reports/tracks" method="get">
+
+                                            <div class="mb-3">
+                                                <label for="yearSelect3" class="form-label text-light">Select Year</label>
+                                                <select class="form-select bg-dark text-white border-light" id="yearSelect3" name="year">
+                                                    <option value="2022">2022</option>
+                                                    <option value="2023">2023</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="monthSelect3" class="form-label text-light">Select Month</label>
+                                                <select class="form-select bg-dark text-white border-light" id="monthSelect3" name="month">
+                                                    <option value="1">January</option>
+                                                    <option value="2">February</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-light d-block">View Tracks</button>
+                                        </form>
                                     </div>
-                                    <a href="/hot-tracks" class="btn btn-light d-block">View Tracks</a>
                                 </div>
                             </div>
                         </div>
