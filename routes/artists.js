@@ -179,7 +179,7 @@ router.get('/reports/artists', (req, res) => {
             follows f ON f.followed_artist_id = a.id AND
             YEAR(f.followed_at) <= ? AND
             MONTH(f.followed_at) <= ? AND
-            (YEAR(f.unfollowed_at) > ? OR MONTH(f.unfollowed_at) > ? OR f.unfollowed_at IS NULL)
+            ((YEAR(f.unfollowed_at) > ? AND MONTH(f.unfollowed_at) > ?) OR f.unfollowed_at IS NULL)
         GROUP BY
             a.id
         ORDER BY 
