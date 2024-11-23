@@ -47,11 +47,11 @@ router.get('/albums/create', (req, res) => {
 });
 
 router.post('/albums/create', (req, res) => {
-    const { title, album_cover, option_ids } = req.body;
+    const { title, album_cover, artist_id } = req.body;
 
     const sql = "INSERT INTO albums (title, album_cover, artist_id) VALUES (?, ?, ?)";
 
-    con.query(sql, [ title, album_cover, option_ids ], (err, result) => {
+    con.query(sql, [ title, album_cover, artist_id ], (err, result) => {
         res.redirect('/albums');
     });
 });
