@@ -125,6 +125,17 @@ router.post('/tracks/update/:id', (req, res) => {
     });
 });
 
+// Delete Tracks
+router.post('/tracks/delete/:id', (req, res) => {
+    const id = req.params.id;
+
+    const sql = "DELETE FROM tracks WHERE id = ?";
+
+    con.query(sql, [id], (err, result) => {
+        res.redirect('/tracks');
+    });
+});
+
 // Tracks Report
 router.get('/reports/tracks', (req, res) => {
     const { year, month } = req.query;
