@@ -31,6 +31,7 @@ router.get('/tracks/create', (req, res) => {
         con.query("SELECT * FROM languages", (err, languages) => {
             con.query("SELECT * FROM albums", (err, albums) => {
                 res.render('tracks-form', {
+                    error: "",
                     action: "create",
                     disabled: false,
                     track: {
@@ -73,6 +74,7 @@ router.get('/tracks/read/:id', (req, res) => {
             con.query("SELECT * FROM albums", (err, albums) => {
                 con.query(sql, [id], (err, result) => {
                     res.render('tracks-form', { 
+                        error: "",
                         action: "read",
                         disabled: true,
                         track: result[0],
@@ -98,6 +100,7 @@ router.get('/tracks/update/:id', (req, res) => {
             con.query("SELECT * FROM albums", (err, albums) => {
                 con.query(sql, [id], (err, result) => {
                     res.render('tracks-form', {
+                        error: "",
                         action: `update/${id}`,
                         disabled: false,
                         track: result[0],
