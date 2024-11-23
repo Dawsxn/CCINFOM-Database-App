@@ -46,7 +46,7 @@
                         <select id="select" name="select" class="form-select" onchange="this.form.submit()">
                             <option value="" selected disabled>Select an Artist</option>
                             <% options.forEach(option => { %>
-                                <option value="<%= option.id %>" <%= option.id == id ? 'selected' : '' %>><%= option.username %></option>
+                                <option value="<%= option.id %>" <%= option.id == id ? 'selected' : '' %>><%= option.username %>#<%= option.id %></option>
                             <% }); %>
                         </select>
                     </div>

@@ -34,7 +34,6 @@ router.get('/albums/create', (req, res) => {
 
     con.query("SELECT id, username FROM artists", (err, option_ids) => {
         res.render('albums-form', {
-            error: "",
             action: "create",
             disabled: false,
             albums: {
@@ -66,7 +65,6 @@ router.get('/albums/read/:id', (req, res) => {
     con.query("SELECT id, username FROM artists", (err, option_ids) => {
         con.query(sql, [id], (err, result) => {
             res.render('albums-form', { 
-                error: "",
                 action: "",
                 disabled: true,
                 albums: result[0],
@@ -87,7 +85,6 @@ router.get('/albums/update/:id', (req, res) => {
     con.query("SELECT id, username FROM artists", [id], (err, option_ids) => {
         con.query(sql, [id], (err, result) => {
             res.render('albums-form', {
-                error: "",
                 action: `update/${id}`,
                 disabled: false,
                 albums: result[0],

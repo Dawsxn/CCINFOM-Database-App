@@ -14,9 +14,6 @@
 
     <!-- Main Form Container -->
     <div class="container bg-dark text-white p-5 rounded shadow-lg" id="MainFrame">
-        <div class="mb-3">
-            <div class="text-danger text-weight-bold text-center"><%= error %></div>
-        </div>
         <form action="/albums/<%= action %>" method="POST" class="needs-validation" novalidate>
             <!-- Title -->
             <div class="mb-4">
@@ -37,7 +34,7 @@
                 <label for="option_ids" class="form-label">Artist ID</label>
                 <select id="option_ids" name="artist_id" class="form-select" onchange="" <%= disabled ? 'disabled' : '' %>>
                     <% option_ids.forEach(option_id => { %>
-                        <option value="<%= option_id.id %>" <%= option_id.id === albums.artist_id ? 'selected' : '' %>><%= option_id.username %></option>
+                        <option value="<%= option_id.id %>" <%= option_id.id === albums.artist_id ? 'selected' : '' %>><%= option_id.username %>#<%= option_id.id %></option>
                     <% }); %>
                 </select>
                 <!-- <div class="invalid-feedback">Please provide a bio.</div> -->

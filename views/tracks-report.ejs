@@ -49,7 +49,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10%;">Rank</th>
-                                    <th style="width: 70%;">Title</th>
+                                    <th style="width: 70%;">Title#ID</th>
                                     <th style="width: 20%;">Streams</th>
                                 </tr>
                             </thead>
@@ -58,7 +58,7 @@
                                 <% tracks.forEach(track => { %>
                                     <tr>
                                         <td><%= rank++ %></td>
-                                        <td><%= track.title %></td>
+                                        <td><%= track.title %>#<%= track.id %></td>
                                         <td><%= track.streams %></td>
                                     </tr>
                                 <% }); %>

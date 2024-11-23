@@ -31,7 +31,6 @@ router.get('/tracks/create', (req, res) => {
         con.query("SELECT * FROM languages", (err, languages) => {
             con.query("SELECT * FROM albums", (err, albums) => {
                 res.render('tracks-form', {
-                    error: "",
                     action: "create",
                     disabled: false,
                     track: {
@@ -74,7 +73,6 @@ router.get('/tracks/read/:id', (req, res) => {
             con.query("SELECT * FROM albums", (err, albums) => {
                 con.query(sql, [id], (err, result) => {
                     res.render('tracks-form', { 
-                        error: "",
                         action: "read",
                         disabled: true,
                         track: result[0],
@@ -100,7 +98,6 @@ router.get('/tracks/update/:id', (req, res) => {
             con.query("SELECT * FROM albums", (err, albums) => {
                 con.query(sql, [id], (err, result) => {
                     res.render('tracks-form', {
-                        error: "",
                         action: `update/${id}`,
                         disabled: false,
                         track: result[0],
@@ -123,7 +120,6 @@ router.post('/tracks/update/:id', (req, res) => {
     const sql = "UPDATE tracks SET title = ?, audio = ?, duration = ?, explicit = ?, genre_id = ?, language_id = ?, album_id = ? WHERE id = ?";
 
     con.query(sql, [title, audio, duration, explicit, genre, language, album, id], (err, result) => {
-        console.log(err);
         res.redirect('/tracks');
     });
 });
